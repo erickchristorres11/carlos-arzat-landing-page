@@ -1,0 +1,378 @@
+/* =========================================================
+   Carlos Arzat · Landing personal
+   Sistema tomado de dineshrevunuru.com (estructura, tipografía y color),
+   con acento azul de marca y tarjetas que funcionan como herramientas.
+   ========================================================= */
+
+/* ---------- 1. Tokens ---------- */
+:root{
+  /* Neutros de la referencia */
+  --white:#fff;
+  --hero-bg:#fcf9f8;
+  --head:#101010;
+  --ink:#202020;
+  --body:#3a3a3a;
+  --mute:#5e5a58;
+  --line:#ebe5e2;
+
+  /* Acento y footer */
+  --blue:#2e71f1;
+  --blue-deep:#1f58c7;
+  --footer:#1a6fe0;        /* #1c7cf5 de la referencia, un punto más profundo para texto blanco AA */
+  --wa:#187a41;           /* verde WhatsApp oscurecido para contraste AA con texto blanco */
+
+  /* Parejas pastel fondo / tinta, una por pilar */
+  --fin-bg:#e8edfd; --fin-ink:#2a34c6;
+  --ret-bg:#def4f0; --ret-ink:#1c601c;
+  --pre-bg:#fbeae4; --pre-ink:#c40d12;
+  --fun-bg:#e0eefd; --fun-ink:#303030;
+
+  --serif:"Playfair Display", Georgia, "Times New Roman", serif;
+  --sans:"Poppins", system-ui, -apple-system, "Segoe UI", sans-serif;
+
+  --ease-out:cubic-bezier(.16,1,.3,1);
+  --ease-arrow:cubic-bezier(.2,.7,.2,1);
+
+  --gutter:clamp(20px, 6.9vw, 100px);
+  --section:clamp(88px, 11vw, 160px);
+  color-scheme:light;
+}
+
+/* ---------- 2. Base ---------- */
+*,*::before,*::after{box-sizing:border-box}
+html{scroll-behavior:smooth;-webkit-text-size-adjust:100%}
+body{
+  margin:0;background:var(--white);color:var(--ink);
+  font:400 16px/1.65 var(--sans);
+  -webkit-font-smoothing:antialiased;text-rendering:optimizeLegibility;
+}
+h1,h2,h3,h4,p,dl,dd,figure,blockquote,ol,ul{margin:0;padding:0}
+ul,ol{list-style:none}
+h1,h2,h3,h4{text-wrap:balance;color:var(--head)}
+p{text-wrap:pretty}
+a{color:inherit;text-underline-offset:.22em;text-decoration-thickness:1px}
+img,svg{display:block;max-width:100%}
+b{font-weight:600}
+
+/* Superficies del navegador también llevan la marca */
+::selection{background:var(--blue);color:#fff}
+input{caret-color:var(--blue)}
+:focus-visible{outline:2px solid var(--blue);outline-offset:3px;border-radius:6px}
+html{scrollbar-color:#cfc6c2 var(--white)}
+
+.wrap{width:100%;max-width:1440px;margin-inline:auto;padding-inline:var(--gutter)}
+.skip{position:absolute;left:12px;top:-60px;background:var(--head);color:#fff;padding:10px 16px;border-radius:8px;z-index:100;text-decoration:none}
+.skip:focus{top:12px}
+
+/* ---------- 3. Navegación ---------- */
+.nav{display:flex;align-items:center;justify-content:space-between;padding-block:22px}
+.mono{font:700 38px/1 var(--serif);color:var(--head);text-decoration:none;letter-spacing:-.01em}
+.mono span{color:var(--blue)}
+.nav ul{display:flex;gap:clamp(18px,3vw,40px)}
+.nav a:not(.mono){font-size:17px;font-weight:500;text-decoration:none;color:var(--ink);position:relative;padding-block:6px}
+.nav a:not(.mono)::after{content:"";position:absolute;left:0;right:0;bottom:0;height:1.5px;background:var(--blue);transform:scaleX(0);transform-origin:left;transition:transform .35s var(--ease-out)}
+.nav a:not(.mono):hover::after{transform:scaleX(1)}
+@media (max-width:720px){
+  .nav ul{gap:16px}
+  .nav li:nth-child(n+2):not(:last-child){display:none}
+  .nav a:not(.mono){font-size:15px}
+  .mono{font-size:32px}
+}
+
+/* ---------- 4. Hero ---------- */
+.hero{padding-top:clamp(48px,5vw,72px)}
+.hero-card{
+  position:relative;background:var(--hero-bg);border-radius:24px;
+  display:grid;grid-template-columns:minmax(0,1.15fr) minmax(0,.85fr);
+  grid-template-areas:"copy photo" "creds creds";
+}
+.hero-copy{grid-area:copy;padding:clamp(40px,4.6vw,68px) 0 44px clamp(28px,6.6vw,96px);max-width:720px;position:relative;z-index:2}
+.hero h1{font-weight:inherit}
+.hello{display:block;font:600 clamp(42px,4.6vw,66px)/1.08 var(--serif);color:var(--head);letter-spacing:-.01em}
+.role{display:block;margin-top:.2em;font:600 clamp(28px,2.75vw,42px)/1.15 var(--sans);color:var(--blue);letter-spacing:-.02em}
+.intro{margin-top:24px;max-width:34em;font-size:clamp(17px,1.35vw,20px);line-height:1.75;color:var(--ink)}
+.intro b{color:var(--head)}
+
+/* Selector de tema: arma el mensaje de WhatsApp */
+.pick{margin-top:30px}
+.pick fieldset{border:0;margin:0;padding:0;min-width:0}
+.pick legend{padding:0;font-size:15px;font-weight:600;color:var(--head);margin-bottom:12px}
+.pick-options{display:flex;flex-wrap:wrap;gap:8px}
+.pick label{cursor:pointer;position:relative}
+.pick input[type=radio]{position:absolute;opacity:0;inset:0;margin:0;cursor:pointer}
+.pick label span{
+  display:inline-block;padding:9px 16px;border-radius:999px;font-size:14.5px;font-weight:500;
+  background:var(--white);color:var(--ink);border:1px solid var(--line);
+  transition:background .25s var(--ease-out), color .25s var(--ease-out), border-color .25s var(--ease-out);
+}
+.pick label:hover span{border-color:var(--blue)}
+.pick input:checked + span{background:var(--head);border-color:var(--head);color:#fff}
+.pick input:focus-visible + span{outline:2px solid var(--blue);outline-offset:3px}
+.btn-wa{
+  margin-top:22px;display:inline-flex;align-items:center;gap:10px;
+  font:600 16px/1 var(--sans);color:#fff;background:var(--wa);border:0;cursor:pointer;
+  padding:17px 26px 17px 22px;border-radius:999px;
+  box-shadow:0 10px 24px -12px rgba(16,16,16,.35);
+  transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out), background .2s;
+}
+.btn-wa:hover{transform:translateY(-2px);background:#136836;box-shadow:0 16px 30px -14px rgba(16,16,16,.4)}
+.btn-wa:active{transform:translateY(0)}
+.pick-note{margin-top:12px;font-size:13.5px;color:var(--mute)}
+.pick-note b{color:var(--head);font-weight:500}
+
+/* Retrato que sobresale de la tarjeta por arriba */
+.portrait{grid-area:photo;position:relative;align-self:end;justify-self:center;width:min(100%,420px);height:calc(100% + 44px);margin-top:-44px;min-height:500px}
+.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:bottom center}
+.portrait-missing{display:none}
+.no-photo .portrait img{display:none}
+.no-photo .portrait-missing{
+  position:absolute;inset:0 18px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
+  border-radius:200px 200px 0 0;background:linear-gradient(#e0eefd,#eef4fd);color:#405a7c;text-align:center;padding:24px;
+  border:1.5px dashed #a9bfdc;border-bottom:0;
+}
+.portrait-missing span{font-weight:500;font-size:15px;color:#2b4466}
+.portrait-missing small{font-size:12.5px}
+
+/* Credenciales al pie de la tarjeta */
+.creds{grid-area:creds;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);position:relative;z-index:2;background:var(--hero-bg);border-radius:0 0 24px 24px}
+.creds div{padding:22px clamp(18px,2.2vw,32px) 24px}
+.creds div + div{border-left:1px solid var(--line)}
+.creds div:first-child{padding-left:clamp(28px,6.6vw,96px)}
+.creds dt{font-size:13px;color:var(--mute);line-height:1.4}
+.creds dd{margin-top:4px;font:600 clamp(18px,1.5vw,22px)/1.25 var(--serif);color:var(--head);font-variant-numeric:lining-nums tabular-nums}
+
+@media (max-width:1000px){
+  .hero-card{grid-template-columns:1fr;grid-template-areas:"photo" "copy" "creds"}
+  .portrait{width:min(78%,340px);height:400px;min-height:0;margin-top:-48px}
+  .hero-copy{padding:36px 28px 40px;max-width:none}
+  .creds{grid-template-columns:1fr 1fr}
+  .creds div:first-child{padding-left:28px}
+  .creds div:nth-child(3){border-left:0;padding-left:28px}
+  .creds div:nth-child(n+3){border-top:1px solid var(--line)}
+}
+@media (max-width:520px){
+  .hero{padding-top:64px}
+  .hero-copy{padding:28px 22px 34px}
+  .portrait{height:290px}
+  .creds div{padding:18px 16px 20px}
+  .creds div:first-child,.creds div:nth-child(3){padding-left:22px}
+  .btn-wa{width:100%;justify-content:center}
+}
+
+/* ---------- 5. Lema ---------- */
+.motto{padding-block:var(--section) calc(var(--section) * .55)}
+.motto blockquote{max-width:1100px}
+.motto p{font:500 clamp(32px,4.4vw,64px)/1.16 var(--serif);color:var(--head);letter-spacing:-.015em;text-wrap:balance}
+.motto em{font-style:normal;color:var(--blue)}
+
+/* ---------- 6. Encabezados de sección ---------- */
+.sec-head{max-width:760px;margin-bottom:clamp(36px,4vw,56px)}
+.sec-head h2,.about-head h2{font:600 clamp(32px,3.4vw,48px)/1.12 var(--serif);letter-spacing:-.01em}
+.sec-head p{margin-top:16px;font-size:clamp(16px,1.2vw,18px);color:var(--body);max-width:36em}
+
+/* ---------- 7. Servicios: tarjetas pastel con herramienta ---------- */
+.services{padding-bottom:calc(var(--section) * .7)}
+.cards{display:grid;grid-template-columns:1fr 1fr;gap:clamp(20px,2.4vw,32px)}
+.card{
+  --bg:var(--fin-bg);--c:var(--fin-ink);
+  background:var(--bg);color:var(--c);border-radius:16px;
+  padding:clamp(28px,3.4vw,48px);display:flex;flex-direction:column;
+  overflow:hidden;
+}
+.c-fin{--bg:var(--fin-bg);--c:var(--fin-ink)}
+.c-ret{--bg:var(--ret-bg);--c:var(--ret-ink)}
+.c-pre{--bg:var(--pre-bg);--c:var(--pre-ink);grid-column:1 / -1;display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(24px,4vw,64px);align-items:start}
+.card h3{font:600 clamp(30px,2.7vw,40px)/1.15 var(--serif);color:var(--c)}
+.card-text{margin-top:14px;font-size:15.5px;line-height:1.7;max-width:34em}
+.more{margin-top:18px;display:inline-flex;align-items:center;gap:8px;align-self:flex-start;font-weight:500;font-size:15.5px;text-decoration:none;color:var(--c)}
+.more svg{transition:transform .3s var(--ease-arrow)}
+.more:hover svg{transform:translateX(4px)}
+.more:hover{text-decoration:underline}
+
+/* La herramienta "sangra" hacia los bordes de la tarjeta, como las capturas de la referencia */
+.tool{
+  /* Sale por el borde inferior de la tarjeta, como la captura recortada de la referencia */
+  flex:1;margin:32px 0 calc(clamp(28px,3.4vw,48px) * -1);padding:26px 26px 30px;border-radius:14px 14px 0 0;background:var(--white);color:var(--ink);
+  box-shadow:0 1px 0 rgba(0,0,0,.03), 0 18px 40px -22px color-mix(in srgb, var(--c) 45%, transparent);
+}
+.field{display:block}
+.field > span:first-child,.range > span{display:flex;justify-content:space-between;align-items:baseline;font-size:13.5px;font-weight:500;color:var(--mute)}
+.money{margin-top:6px;display:flex;align-items:baseline;gap:4px;border-bottom:1.5px solid var(--line);transition:border-color .2s}
+.money:focus-within{border-color:var(--c)}
+.money b{font:600 28px/1.2 var(--serif);color:var(--c)}
+.money input{
+  width:100%;border:0;background:transparent;outline:0;padding:4px 0 8px;
+  font:600 clamp(28px,2.6vw,36px)/1.1 var(--serif);color:var(--head);font-variant-numeric:lining-nums tabular-nums;
+}
+.hint{margin-top:8px;font-size:13px;color:var(--mute)}
+
+.split{display:flex;height:14px;border-radius:999px;overflow:hidden;margin-top:20px;gap:3px}
+.split i{display:block;height:100%}
+.split .s50{flex:50}.split .s30{flex:30}.split .s20{flex:20}
+.s50{background:var(--fin-ink)}
+.s30{background:#8c93e6}
+.s20{background:#1f8f4e}
+.split-legend{margin-top:14px;display:grid;gap:8px}
+.split-legend div{display:flex;justify-content:space-between;align-items:center;gap:12px;font-size:14.5px}
+.split-legend dt{display:flex;align-items:center;gap:10px;color:var(--body)}
+.split-legend dt i{width:10px;height:10px;border-radius:3px;flex:none}
+.split-legend dd{font-weight:600;color:var(--head);font-variant-numeric:tabular-nums}
+.tool{display:flex;flex-direction:column}
+.goal{margin-top:auto;padding-top:16px;border-top:1px solid var(--line)}
+.goal .money input{font-size:clamp(22px,2vw,28px)}
+.goal .money b{font-size:22px}
+.year{margin-top:12px;font-size:14.5px;color:var(--body)}
+.year b{color:var(--c);font-variant-numeric:tabular-nums}
+
+/* Simulador de inflación */
+.sim-inputs{display:grid;gap:16px}
+.range output{font:600 15px/1 var(--sans);color:var(--head);font-variant-numeric:tabular-nums}
+.range input{width:100%;margin:10px 0 0;-webkit-appearance:none;appearance:none;height:22px;background:transparent;cursor:pointer;--p:57%}
+.range input::-webkit-slider-runnable-track{height:4px;border-radius:4px;background:linear-gradient(to right,var(--c) var(--p),#dde5e2 var(--p))}
+.range input::-moz-range-track{height:4px;border-radius:4px;background:#dde5e2}
+.range input::-moz-range-progress{height:4px;border-radius:4px;background:var(--c)}
+.range input::-webkit-slider-thumb{-webkit-appearance:none;width:20px;height:20px;margin-top:-8px;border-radius:50%;background:var(--white);border:2px solid var(--c);box-shadow:0 2px 6px rgba(0,0,0,.15);transition:transform .2s var(--ease-out)}
+.range input::-moz-range-thumb{width:16px;height:16px;border-radius:50%;background:var(--white);border:2px solid var(--c);box-shadow:0 2px 6px rgba(0,0,0,.15)}
+.range input:active::-webkit-slider-thumb{transform:scale(1.15)}
+.sim-out{margin-top:22px;padding-top:18px;border-top:1px solid var(--line)}
+.big{font-size:15.5px;color:var(--body)}
+.big small{font:500 15px/1 var(--sans);color:var(--body)}
+.big > b{display:block;margin-top:2px;font:600 clamp(32px,3vw,42px)/1.1 var(--serif);color:var(--c);font-variant-numeric:lining-nums tabular-nums}
+.curve{margin-top:14px;width:100%;height:110px;overflow:visible}
+.curve .area{fill:color-mix(in srgb, var(--ret-ink) 12%, transparent)}
+.curve .line{fill:none;stroke:var(--ret-ink);stroke-width:2.2;vector-effect:non-scaling-stroke;stroke-linejoin:round}
+.js .curve .line{stroke-dasharray:1;stroke-dashoffset:var(--draw,0);transition:stroke-dashoffset 1.6s var(--ease-out)}
+.js .curve:not(.drawn) .line{--draw:1}
+.curve .base{stroke:var(--line);stroke-width:1;vector-effect:non-scaling-stroke}
+.curve-axis{display:flex;justify-content:space-between;margin-top:6px;font-size:12.5px;color:var(--mute)}
+.curve-axis b{font-weight:600;color:var(--body);font-variant-numeric:tabular-nums}
+.fine{margin-top:14px;font-size:12.5px;line-height:1.5;color:var(--mute)}
+
+/* Previsión */
+.pre-grid{display:grid;grid-template-columns:1fr 1fr;gap:32px}
+.cover{padding-top:18px;border-top:1px solid color-mix(in srgb, var(--pre-ink) 35%, transparent)}
+.cover h4{font:600 22px/1.2 var(--serif);color:var(--c)}
+.cover p{margin-top:10px;font-size:15px;line-height:1.65;color:var(--pre-ink)}
+
+
+@media (max-width:1000px){
+  .cards{grid-template-columns:1fr}
+  .c-pre{grid-template-columns:1fr}
+}
+@media (max-width:560px){
+  .pre-grid{grid-template-columns:1fr;gap:24px}
+  .tool{padding:22px 20px 26px}
+}
+
+/* ---------- 8. Método: tres jugadas ---------- */
+.method{padding-block:var(--section);background:var(--hero-bg)}
+.moves{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:m}
+.move{padding:0 clamp(20px,3vw,48px);border-left:1px solid var(--line)}
+.move:first-child{padding-left:0;border-left:0}
+.move:last-child{padding-right:0}
+.board{width:72px;height:72px;border-radius:6px;overflow:hidden}
+.board .sq-l{fill:#efe7e2}
+.board .sq-d{fill:#d9cbc2}
+.board .sq-was{fill:color-mix(in srgb, var(--blue) 28%, #efe7e2)}
+.board .sq-on{fill:var(--blue)}
+.phase{color:var(--blue-deep)}
+.move h3{margin-top:24px;font:600 clamp(24px,2.1vw,30px)/1.2 var(--serif)}
+.move p:not(.phase){margin-top:14px;font-size:15.5px;line-height:1.75;color:var(--body);max-width:30em}
+@media (max-width:900px){
+  .moves{grid-template-columns:1fr;gap:40px}
+  .move,.move:first-child,.move:last-child{padding:0;border-left:0}
+  .move + .move{padding-top:40px;border-top:1px solid var(--line)}
+}
+
+/* ---------- 9. Sobre mí: tiles con material propio ---------- */
+.about{padding-block:var(--section);display:grid;grid-template-columns:minmax(0,.9fr) minmax(0,1.1fr);gap:clamp(36px,5vw,88px);align-items:start}
+.about-head .belief{margin-top:24px;font:500 clamp(22px,1.9vw,28px)/1.4 var(--serif);color:var(--head)}
+.about-head p:not(.belief){margin-top:20px;font-size:16.5px;line-height:1.75;color:var(--body);max-width:32em}
+.about-head b{color:var(--head)}
+.tiles{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.tile{background:var(--fun-bg);color:var(--fun-ink);border-radius:12px;padding:26px 24px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:transform .35s var(--ease-out), box-shadow .35s var(--ease-out)}
+.tile h3{font:600 22px/1.2 var(--serif);color:inherit;position:relative}
+.tile p{margin-top:8px;font-size:14.5px;line-height:1.6;position:relative}
+
+.t-family::before{
+  /* Tres arcos concéntricos: los tuyos, cubiertos */
+  content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 22px,var(--blue) 22px 30px,transparent 30px 44px,#7aa3ee 44px 52px,transparent 52px 66px,#b9cff7 66px 74px,transparent 74px);
+}
+.t-chess{}
+.t-chess::before{
+  content:"";position:absolute;right:-1px;top:-1px;width:120px;height:120px;opacity:.9;
+  background:conic-gradient(#b9cff7 25%,transparent 0 50%,#b9cff7 0 75%,transparent 0) 0 0/30px 30px;
+  -webkit-mask:linear-gradient(225deg,#000 30%,transparent 75%);mask:linear-gradient(225deg,#000 30%,transparent 75%);
+}
+.t-chivas{}
+.t-chivas::before{
+  /* Las rayas rojiblancas del club, sin escudo */
+  content:"";position:absolute;inset:0 0 auto auto;width:100%;height:58px;
+  background:repeating-linear-gradient(90deg,#c8102e 0 18px,transparent 18px 36px);
+  -webkit-mask:linear-gradient(#000,transparent);mask:linear-gradient(#000 20%,transparent);
+}
+.t-music{}
+.t-music::before{
+  /* Ecualizador estático */
+  content:"";position:absolute;right:22px;top:26px;width:70px;height:40px;
+  background:
+    linear-gradient(var(--blue),var(--blue)) 0 100%/8px 60% no-repeat,
+    linear-gradient(var(--blue),var(--blue)) 15px 100%/8px 100% no-repeat,
+    linear-gradient(var(--blue),var(--blue)) 30px 100%/8px 40% no-repeat,
+    linear-gradient(var(--blue),var(--blue)) 45px 100%/8px 80% no-repeat,
+    linear-gradient(var(--blue),var(--blue)) 60px 100%/8px 30% no-repeat;
+}
+@media (max-width:1000px){.about{grid-template-columns:1fr}}
+@media (max-width:520px){
+  .tiles{grid-template-columns:1fr}
+}
+
+/* ---------- 10. Footer azul ---------- */
+.footer{background:var(--footer);color:#fff}
+.f-grid{padding-block:clamp(88px,10vw,140px) clamp(64px,7vw,96px);display:grid;grid-template-columns:minmax(0,1.1fr) minmax(0,.9fr);gap:56px;align-items:end}
+.f-name{font:600 clamp(44px,5.6vw,84px)/1.02 var(--serif);letter-spacing:-.015em;color:#fff}
+.f-role{margin-top:22px;font-size:17px;color:#fff}
+.f-city{margin-top:4px;font-size:15px;color:#fff;opacity:1}
+.f-invite{font-size:17px;line-height:1.7;color:#fff;max-width:28em}
+.f-wa{
+  margin-top:24px;display:flex;align-items:center;justify-content:space-between;gap:12px;
+  background:#fff;color:#0f3f86;text-decoration:none;font-weight:600;font-size:17px;
+  padding:20px 24px;border-radius:14px;transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out);
+}
+.f-wa:hover{transform:translateY(-2px);box-shadow:0 18px 36px -18px rgba(0,0,0,.45)}
+.f-wa svg{transition:transform .3s var(--ease-arrow)}
+.f-wa:hover svg{transform:translateX(4px)}
+.f-line{display:block;margin-top:16px;font-size:16.5px;text-decoration:none;color:#fff;word-break:break-word}
+.f-line:hover{text-decoration:underline}
+.f-social{margin-top:30px;font-size:14px;font-weight:500;color:#fff}
+.footer :focus-visible{outline-color:#fff}
+.footer ::selection{background:#fff;color:var(--footer)}
+.f-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:22px 28px;border-top:1px solid rgba(255,255,255,.22);font-size:13px;color:#fff}
+@media (max-width:900px){.f-grid{grid-template-columns:1fr;gap:40px}}
+
+/* ---------- 11. Botón flotante ---------- */
+.float-wa{
+  position:fixed;right:20px;bottom:20px;z-index:40;display:inline-flex;align-items:center;gap:8px;
+  background:var(--wa);color:#fff;text-decoration:none;font-weight:600;font-size:15px;
+  padding:14px 20px 14px 16px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.35);
+  transition:opacity .35s var(--ease-out), transform .45s var(--ease-out);
+}
+.float-wa.off{opacity:0;transform:translateY(16px) scale(.96);pointer-events:none}
+
+/* ---------- 12. Entrada escalonada (.seq de la referencia) ----------
+   Solo se oculta lo que está fuera de pantalla y solo con JS activo:
+   el contenido es visible por defecto. */
+@media (prefers-reduced-motion:no-preference){
+  .js .seq.wait{opacity:0;transform:translateY(30px);filter:blur(4px)}
+  .js .seq{transition:opacity 1s var(--ease-out), transform 1s var(--ease-out), filter 1s var(--ease-out);transition-delay:var(--sd,0ms)}
+  .js .card.seq{transition:opacity 1s var(--ease-out), transform 1s var(--ease-out), filter 1s var(--ease-out)}
+  .js .hero-copy > *{animation:rise 1s var(--ease-out) both;animation-delay:var(--sd,0ms)}
+  .js .portrait{animation:lift 1.2s var(--ease-out) .15s both}
+}
+@keyframes rise{from{opacity:0;transform:translateY(24px)}}
+@keyframes lift{from{opacity:0;transform:translateY(40px)}}
+@media (prefers-reduced-motion:reduce){
+  html{scroll-behavior:auto}
+  *,*::before,*::after{transition-duration:.01ms!important;animation:none!important}
+}

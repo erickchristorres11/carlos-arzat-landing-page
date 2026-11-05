@@ -1,0 +1,15 @@
+Archivos pendientes del cliente
+
+1. carlos-arzat.png
+   Foto de Carlos de la cintura hacia arriba, PNG con fondo transparente,
+   mínimo 1200 x 1500 px. Al colocarla aquí con este nombre, el hero la
+   muestra en lugar del espacio reservado (no hay que tocar el código).
+
+2. Logotipos de Allianz, AXA y Mapfre (SVG o PNG monocromo), con permiso
+   de uso de cada aseguradora. Hoy aparecen como texto en "Trabajo con".
+
+3. URLs de Facebook e Instagram: reemplazar los href="#" en index.html
+   (sección footer, lista .f-social).
+
+4. Confirmar con Carlos el texto de su filosofía: "Creo firmemente que la vida es solo una..."
+   (el original decía "que vida solo una"; la página usa la corrección propuesta).

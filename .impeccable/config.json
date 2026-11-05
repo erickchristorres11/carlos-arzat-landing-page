@@ -1,0 +1,17 @@
+{
+  "detector": {
+    "ignoreRules": [],
+    "ignoreFiles": [],
+    "ignoreValues": [
+      {
+        "rule": "cramped-padding",
+        "value": "*",
+        "files": [
+          "sitio/index.html"
+        ],
+        "createdAt": "2026-11-04T23:51:08.239Z",
+        "reason": "agent: .move columns are inset 20-48px from their 1px dividers and .method content is inset by .wrap gutter; verified in desktop/mobile renders"
+      }
+    ]
+  }
+}

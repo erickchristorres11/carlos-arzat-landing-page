@@ -1,0 +1,287 @@
+<!DOCTYPE html>
+<html lang="es-MX">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Carlos Arzat · Actuario y asesor financiero en Mérida</title>
+<meta name="description" content="Carlos Geovanny Arzat Torres, licenciado en Actuaría y agente de seguros certificado por la CNSF. Planeación de finanzas personales, retiro y protección en Mérida, Yucatán.">
+<meta name="theme-color" content="#fcf9f8">
+
+<!-- Tipografía de la referencia (dineshrevunuru.com): Playfair Display para saludos y títulos, Poppins para todo lo demás -->
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;600;700&family=Poppins:wght@300;400;500;600&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+<a class="skip" href="#contenido">Saltar al contenido</a>
+
+<!-- ============ NAVEGACIÓN ============
+     Monograma "Ca." como el "Rd." de la referencia, con el punto en azul de marca. -->
+<header class="nav wrap">
+  <a class="mono" href="#inicio" aria-label="Carlos Arzat, inicio">Ca<span>.</span></a>
+  <nav aria-label="Principal">
+    <ul>
+      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#metodo">Método</a></li>
+      <li><a href="#carlos">Sobre mí</a></li>
+      <li><a href="#contacto">Contacto</a></li>
+    </ul>
+  </nav>
+</header>
+
+<main id="contenido">
+
+  <!-- ============ HERO ============
+       Tarjeta clara con el retrato recortado que sobresale por arriba.
+       El selector de tema arma el mensaje de WhatsApp: la acción principal ya funciona desde aquí. -->
+  <section class="hero wrap" id="inicio" aria-labelledby="hola">
+    <div class="hero-card">
+      <div class="hero-copy" data-seq-group>
+        <h1 id="hola"><span class="hello">Hola, soy Carlos,</span>
+          <span class="role">actuario y asesor financiero</span></h1>
+
+        <p class="intro">Te ayudo a ordenar tu dinero, planear tu retiro y proteger a tu familia con un plan hecho sobre <b>estudios actuariales</b>, no sobre un catálogo de productos. <b>Agente de seguros certificado por la CNSF</b>, en Mérida, Yucatán.</p>
+
+        <form class="pick" id="pick" action="https://wa.me/529991392123" method="get" target="_blank">
+          <fieldset>
+            <legend>¿Qué quieres resolver primero?</legend>
+            <div class="pick-options">
+              <label><input type="radio" name="tema" value="ordenar mis finanzas" checked><span>Ordenar mis finanzas</span></label>
+              <label><input type="radio" name="tema" value="planear mi retiro"><span>Planear mi retiro</span></label>
+              <label><input type="radio" name="tema" value="proteger a mi familia"><span>Proteger a mi familia</span></label>
+              <label><input type="radio" name="tema" value="proteger mi negocio"><span>Proteger mi negocio</span></label>
+            </div>
+          </fieldset>
+          <input type="hidden" name="text" id="wa-text" value="Hola Carlos, quiero agendar un diagnóstico para ordenar mis finanzas.">
+          <button class="btn-wa" type="submit">
+            <svg aria-hidden="true" viewBox="0 0 24 24" width="20" height="20"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.4-.2Z"/></svg>
+            Escríbeme por WhatsApp
+          </button>
+          <p class="pick-note" id="pick-note" aria-live="polite">Se abrirá WhatsApp con tu tema: <b>ordenar mis finanzas</b>.</p>
+        </form>
+      </div>
+
+      <!-- Retrato: PNG de Carlos con fondo transparente en assets/carlos-arzat.png.
+           Mientras no exista, main.js muestra el espacio reservado. -->
+      <figure class="portrait">
+        <img src="assets/carlos-arzat.png" alt="Carlos Arzat" width="900" height="1125" fetchpriority="high">
+        <figcaption class="portrait-missing">
+          <svg aria-hidden="true" viewBox="0 0 64 64" width="56" height="56"><path d="M22 54h24M24 48h20l2 6H22zM26 48c0-8 2-12 6-16-5 0-9-2-10-6 3-9 10-14 18-14l2-4 3 6c4 4 5 10 4 16-1 6-3 11-3 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="36" cy="20" r="1.6" fill="currentColor"/></svg>
+          <span>Espacio para la foto de Carlos</span>
+          <small>PNG sin fondo · 1200 × 1500 px</small>
+        </figcaption>
+      </figure>
+
+      <!-- Credenciales verificables: la prueba va pegada a la presentación -->
+      <dl class="creds">
+        <div><dt>Licenciatura en Actuaría</dt><dd>Cédula 12355703</dd></div>
+        <div><dt>Certificación CNSF</dt><dd>C371460</dd></div>
+        <div><dt>Experiencia en proyecciones</dt><dd>6 años</dd></div>
+        <div><dt>Patrimonio asesorado</dt><dd>+$10 millones MXN</dd></div>
+      </dl>
+    </div>
+  </section>
+
+  <!-- ============ LEMA ============ -->
+  <section class="motto wrap" aria-label="Lema">
+    <blockquote class="seq">
+      <p>Nadie planea fracasar, sin embargo, muchos fracasan <em>por no planear.</em></p>
+    </blockquote>
+  </section>
+
+  <!-- ============ SERVICIOS ============
+       Tarjetas pastel de la referencia (fondo + tinta del mismo tono).
+       En lugar de una captura de pantalla, cada tarjeta trae una herramienta que se puede usar. -->
+  <section class="services wrap" id="servicios" aria-labelledby="t-servicios">
+    <header class="sec-head seq">
+      <h2 id="t-servicios">Tres frentes, un solo plan</h2>
+      <p>Cada plan combina tus finanzas de hoy, tu retiro y tu protección, en el orden que tu situación pide. Pruébalo con tus propios números.</p>
+    </header>
+
+    <div class="cards">
+      <!-- Pilar 1: calculadora 50/30/20 -->
+      <article class="card c-fin seq" aria-labelledby="t-fin">
+        <h3 id="t-fin">Finanzas personales</h3>
+        <p class="card-text">Metas con monto y fecha, la regla 50/30/20 y el “Presupuesto Power” para registrar tus ingresos, detectar fugas y asegurar tu ahorro cada mes.</p>
+
+        <a class="more" href="#contacto" data-tema="ordenar mis finanzas">Quiero ordenar mis finanzas<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+
+        <div class="tool" id="calc">
+          <label class="field">
+            <span>Tu ingreso mensual neto</span>
+            <span class="money"><b aria-hidden="true">$</b><input id="ingreso" type="text" inputmode="numeric" autocomplete="off" value="30,000" aria-describedby="calc-hint"></span>
+          </label>
+          <p class="hint" id="calc-hint">Escribe tu ingreso y mira cómo se reparte.</p>
+          <div class="split" aria-hidden="true"><i class="s50"></i><i class="s30"></i><i class="s20"></i></div>
+          <dl class="split-legend" aria-live="polite">
+            <div><dt><i class="s50"></i>Necesidades · 50 %</dt><dd id="r50">$15,000</dd></div>
+            <div><dt><i class="s30"></i>Deseos · 30 %</dt><dd id="r30">$9,000</dd></div>
+            <div><dt><i class="s20"></i>Ahorro e inversión · 20 %</dt><dd id="r20">$6,000</dd></div>
+          </dl>
+          <div class="goal">
+            <label class="field">
+              <span>Tu meta</span>
+              <span class="money"><b aria-hidden="true">$</b><input id="meta" type="text" inputmode="numeric" autocomplete="off" value="100,000"></span>
+            </label>
+            <p class="year" aria-live="polite">Con tu 20 % la alcanzas en <b id="r-meses">17 meses</b>, hacia <b id="r-fecha">abril de 2028</b>.</p>
+          </div>
+        </div>
+      </article>
+
+      <!-- Pilar 2: simulador de inflación -->
+      <article class="card c-ret seq" aria-labelledby="t-ret">
+        <h3 id="t-ret">Retiro</h3>
+        <p class="card-text">Planeamos tu retiro considerando tu ahorro en la Afore, la inflación y los gastos mensuales que tendrás. Así se ve lo que la inflación le hace a tu gasto de hoy.</p>
+
+        <a class="more" href="#contacto" data-tema="planear mi retiro">Quiero planear mi retiro<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+
+        <div class="tool" id="sim">
+          <div class="sim-inputs">
+            <label class="field">
+              <span>Gasto mensual hoy</span>
+              <span class="money"><b aria-hidden="true">$</b><input id="gasto" type="text" inputmode="numeric" autocomplete="off" value="25,000"></span>
+            </label>
+            <label class="range">
+              <span>Años para tu retiro <output id="o-anos" for="anos">25</output></span>
+              <input id="anos" type="range" min="5" max="40" step="1" value="25">
+            </label>
+            <label class="range">
+              <span>Inflación anual <output id="o-inf" for="inf">4.0 %</output></span>
+              <input id="inf" type="range" min="2" max="8" step="0.5" value="4">
+            </label>
+          </div>
+          <div class="sim-out">
+            <p class="big">Ese mismo gasto costará <b><span id="futuro">$66,646</span> <small>al mes</small></b></p>
+            <svg class="curve" id="curve" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Curva del costo mensual año con año hasta tu retiro">
+              <path class="area" id="curve-area" d=""/>
+              <path class="line" id="curve-line" d="" pathLength="1"/>
+              <line class="base" x1="0" y1="119" x2="320" y2="119"/>
+            </svg>
+            <div class="curve-axis"><span>Hoy · <b id="axis-start">$25,000</b></span><span id="axis-end">En 25 años</span></div>
+          </div>
+          <p class="fine">Simulación ilustrativa con inflación constante. No es una proyección de rendimientos.</p>
+        </div>
+      </article>
+
+      <!-- Pilar 3: previsión, Vida y GMM -->
+      <article class="card c-pre seq" aria-labelledby="t-pre">
+        <div class="pre-copy">
+          <h3 id="t-pre">Previsión</h3>
+          <p class="card-text">Que un imprevisto no deshaga lo que construiste. Diseñamos tu protección con Allianz, AXA y Mapfre.</p>
+          <a class="more" href="#contacto" data-tema="proteger a mi familia">Quiero proteger a mi familia<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
+        </div>
+        <div class="pre-grid">
+          <section class="cover">
+            <h4>Seguro de Vida</h4>
+            <p>Ingresos para tu familia en caso de fallecimiento o invalidez. Lo que tú aportas cada mes sigue llegando a casa.</p>
+          </section>
+          <section class="cover">
+            <h4>Gastos Médicos Mayores</h4>
+            <p>Hospitalización, cirugía y tratamiento sin tocar tus ahorros. Una enfermedad no debería costarte tu patrimonio.</p>
+          </section>
+        </div>
+      </article>
+    </div>
+
+  </section>
+
+  <!-- ============ MÉTODO ============
+       Las tres etapas de una partida de ajedrez: apertura, medio juego y final.
+       El tablero de cada paso marca el avance de la pieza. -->
+  <section class="method" id="metodo" aria-labelledby="t-metodo">
+    <div class="wrap">
+      <header class="sec-head seq">
+        <h2 id="t-metodo">Pensar varias jugadas adelante</h2>
+        <p>Así trabajo tu plan: igual que en el ajedrez, cada movimiento prepara el siguiente.</p>
+      </header>
+
+      <ol class="moves">
+        <li class="move seq">
+          <svg class="board" aria-hidden="true" viewBox="0 0 48 48"><use href="#b"/><rect class="sq-on" x="12" y="36" width="12" height="12"/></svg>
+          <h3><span class="phase">Apertura:</span> conocernos</h3>
+          <p>Hablamos de tu situación financiera con un manejo estricto y confidencial de tu información, para un diagnóstico preciso y una evaluación completa.</p>
+        </li>
+        <li class="move seq">
+          <svg class="board" aria-hidden="true" viewBox="0 0 48 48"><use href="#b"/><rect class="sq-was" x="12" y="36" width="12" height="12"/><rect class="sq-on" x="24" y="12" width="12" height="12"/></svg>
+          <h3><span class="phase">Medio juego:</span> conceptos y prioridades</h3>
+          <p>Ordenamos tus objetivos según tu momento: acumulación, salud, protección o retiro. Primero lo que más pesa hoy.</p>
+        </li>
+        <li class="move seq">
+          <svg class="board" aria-hidden="true" viewBox="0 0 48 48"><use href="#b"/><rect class="sq-was" x="24" y="12" width="12" height="12"/><rect class="sq-on" x="36" y="0" width="12" height="12"/></svg>
+          <h3><span class="phase">Final:</span> plan de acción</h3>
+          <p>Un estudio actuarial y técnico ajustado a tu capacidad real, hasta elegir e implementar la estrategia a tu medida. Y después, seguimiento puntual.</p>
+        </li>
+      </ol>
+    </div>
+    <!-- Tablero base reutilizable (4 × 4) -->
+    <svg width="0" height="0" style="position:absolute" aria-hidden="true">
+      <defs><g id="b"><rect width="48" height="48" fill="#efe7e2"/><path fill="#d9cbc2" d="M12 0h12v12H12zM36 0h12v12H36zM0 12h12v12H0zM24 12h12v12H24zM12 24h12v12H12zM36 24h12v12H36zM0 36h12v12H0zM24 36h12v12H24z"/></g></defs>
+    </svg>
+  </section>
+
+  <!-- ============ SOBRE MÍ ============
+       Las "fun cards" de la referencia: cada tile tiene su propio material. -->
+  <section class="about wrap" id="carlos" aria-labelledby="t-carlos">
+    <div class="about-head seq">
+      <h2 id="t-carlos">Detrás de los números</h2>
+      <p class="belief">“Creo firmemente que la vida es solo una y cada día es una oportunidad para darle mucho más sentido.”</p>
+      <p>Mi enfoque es el máximo servicio y el seguimiento puntual. Trabajo con una idea sencilla: <b>si a ti te va excelente, a mí me va excelente también.</b></p>
+    </div>
+
+    <div class="tiles">
+      <article class="tile t-family seq">
+        <h3>Hombre de familia</h3>
+        <p>Sé lo que significa proteger a los tuyos, porque es lo primero que hago con los míos.</p>
+      </article>
+      <article class="tile t-chess seq">
+        <h3>Ajedrecista</h3>
+        <p>La paciencia del tablero es la misma con la que reviso tu plan.</p>
+      </article>
+      <article class="tile t-chivas seq">
+        <h3>De las Chivas</h3>
+        <p>Aficionado del Club Deportivo Guadalajara, en las buenas y en las malas.</p>
+      </article>
+      <article class="tile t-music seq">
+        <h3>Música en inglés</h3>
+        <p>La que suena mientras corro las proyecciones.</p>
+      </article>
+    </div>
+  </section>
+
+</main>
+
+<!-- ============ CONTACTO / FOOTER ============
+     Footer azul de la referencia con nombre grande, correo, teléfono y redes. -->
+<footer class="footer" id="contacto">
+  <div class="wrap f-grid">
+    <div class="f-who">
+      <p class="f-name">Carlos Geovanny<br>Arzat Torres</p>
+      <p class="f-role">Asesoría y planeación financiera · Agente de seguros CNSF C371460</p>
+      <p class="f-city">Mérida, Yucatán</p>
+    </div>
+    <div class="f-reach">
+      <p class="f-invite">La primera conversación es para conocer tu situación y tus metas. Escríbeme y agendamos tu diagnóstico.</p>
+      <a class="f-wa" id="f-wa" href="https://wa.me/529991392123?text=Hola%20Carlos%2C%20quiero%20agendar%20un%20diagn%C3%B3stico." target="_blank" rel="noopener">WhatsApp · 999 139 2123<svg aria-hidden="true" viewBox="0 0 20 12" width="20" height="12"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+      <a class="f-line" href="tel:+529991392123">(+52) 999 139 2123</a>
+      <a class="f-line" href="mailto:carlosgeovanny.arzattorres@gmail.com">carlosgeovanny.arzattorres@gmail.com</a>
+      <!-- Redes: cuando lleguen las URLs, convertir este texto en enlaces a Facebook e Instagram -->
+      <p class="f-social">Facebook e Instagram · Carlos Arzat – Asesoría Patrimonial</p>
+    </div>
+  </div>
+  <div class="wrap f-base">
+    <span>© 2026 Carlos Arzat · Asesoría Patrimonial</span>
+    <span>Las herramientas de esta página son ilustrativas y no sustituyen un diagnóstico.</span>
+  </div>
+</footer>
+
+<!-- Botón flotante de WhatsApp: se oculta cuando el hero o el footer ya muestran la acción -->
+<a class="float-wa" id="float-wa" href="https://wa.me/529991392123?text=Hola%20Carlos%2C%20quiero%20agendar%20un%20diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Escribir a Carlos por WhatsApp">
+  <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.4-.2Z"/></svg>
+  <span>WhatsApp</span>
+</a>
+
+<script src="main.js" defer></script>
+</body>
+</html>

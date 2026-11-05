@@ -167,6 +167,122 @@
   }
   bind(['pro-ingreso', 'pro-anos', 'pro-deudas', 'pro-edu', 'pro-finales', 'pro-tienes'], proteccion);
 
+  /* ---------- 4b. Solicitud de asesoría por correo ----------
+     Se envía con FormSubmit (formsubmit.co), sin servidor propio.
+     El primer envío dispara un correo de activación a LEAD_EMAIL: hay que confirmarlo
+     una vez y desde entonces cada solicitud llega como tabla al correo. */
+  var LEAD_EMAIL = 'erickarzat11@gmail.com'; // correo de prueba; cambiar por el de Carlos
+  var form = $('lead-form');
+  var submitBtn = $('lf-submit'), status = $('lf-status');
+  var ingresosSel = $('lf-ingresos'), warn = $('lf-warn');
+
+  function fieldBox(el) { return el.closest('.lf'); }
+  function setError(el, msg) {
+    var box = fieldBox(el), err = box && box.querySelector('.lf-err');
+    if (!box) return;
+    box.classList.toggle('invalid', !!msg);
+    if (err) err.textContent = msg || '';
+    el.setAttribute('aria-invalid', msg ? 'true' : 'false');
+  }
+
+  /* Reglas de cada campo; devuelve el mensaje de error o '' */
+  var rules = {
+    nombre: function (v) { return v.trim().split(/\s+/).length < 2 ? 'Escribe tu nombre y al menos un apellido.' : ''; },
+    email: function (v) { return /^[^\s@]+@[^\s@]+\.[^\s@]{2,}$/.test(v.trim()) ? '' : 'Revisa tu correo, por ejemplo nombre@correo.com.'; },
+    edad: function (v) { var n = +v; return v && n >= 18 && n <= 65 ? '' : 'La edad debe estar entre 18 y 65 años.'; },
+    profesion: function (v) { return v.trim().length >= 3 ? '' : 'Escribe tu profesión u ocupación.'; },
+    telefono: function (v) { return v.replace(/\D/g, '').length === 10 ? '' : 'Escribe tu número a 10 dígitos.'; },
+    ingresos: function (v) { return v ? '' : 'Selecciona tu rango de ingresos.'; }
+  };
+  function check(el) {
+    var rule = rules[el.name];
+    if (!rule) return true;
+    var msg = rule(el.value);
+    setError(el, msg);
+    return !msg;
+  }
+
+  // Valida al salir del campo, y corrige en vivo cuando ya tenía error
+  Object.keys(rules).forEach(function (name) {
+    var el = form.elements[name];
+    el.addEventListener('blur', function () { if (el.value) check(el); });
+    el.addEventListener('input', function () { if (fieldBox(el).classList.contains('invalid')) check(el); });
+  });
+
+  // Teléfono: solo dígitos, agrupados 3-3-4
+  var tel = form.elements.telefono;
+  tel.addEventListener('input', function () {
+    var d = tel.value.replace(/\D/g, '').slice(0, 10);
+    tel.value = d.replace(/^(\d{3})(\d{1,3})?(\d{1,4})?$/, function (m, a, b, c) { return [a, b, c].filter(Boolean).join(' '); });
+  });
+
+  // Ingresos menores a $10,000: aviso y envío desactivado
+  function lowIncome() { return ingresosSel.value === 'menos de $10,000'; }
+  ingresosSel.addEventListener('change', function () {
+    check(ingresosSel);
+    var low = lowIncome();
+    warn.hidden = !low;
+    fieldBox(ingresosSel).classList.toggle('warn', low);
+    submitBtn.disabled = low;
+  });
+
+  form.addEventListener('submit', function (e) {
+    e.preventDefault();
+    if (lowIncome()) return;
+
+    var ok = true, first = null;
+    Object.keys(rules).forEach(function (name) {
+      var el = form.elements[name];
+      if (!check(el)) { ok = false; first = first || el; }
+    });
+    var consent = form.elements.consentimiento, consentErr = form.querySelector('.lf-err-consent');
+    consentErr.textContent = consent.checked ? '' : 'Necesitamos tu autorización para contactarte.';
+    if (!consent.checked) { ok = false; first = first || consent; }
+    if (!ok) { first.focus(); return; }
+    if (form.elements._honey.value) return; // bot
+
+    var f = form.elements;
+    var data = {
+      'Nombre completo': f.nombre.value.trim(),
+      'Correo': f.email.value.trim(),
+      'Edad': f.edad.value,
+      'Profesión': f.profesion.value.trim(),
+      'Teléfono': f.lada.value + ' ' + f.telefono.value,
+      'Inversión mensual estimada': f.inversion.value + ' MXN',
+      'Ingresos mensuales': f.ingresos.value + ' MXN',
+      email: f.email.value.trim(), // FormSubmit lo usa como "responder a"
+      _subject: 'Nueva solicitud de proyección de retiro: ' + f.nombre.value.trim(),
+      _template: 'table',
+      _captcha: 'false'
+    };
+
+    submitBtn.setAttribute('aria-busy', 'true');
+    submitBtn.textContent = 'Enviando…';
+    status.className = 'lf-status';
+    status.textContent = '';
+
+    fetch('https://formsubmit.co/ajax/' + LEAD_EMAIL, {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json', Accept: 'application/json' },
+      body: JSON.stringify(data)
+    })
+      .then(function (r) { return r.json().then(function (j) { if (!r.ok || j.success === 'false' || j.success === false) throw j; return j; }); })
+      .then(function () {
+        form.reset();
+        warn.hidden = true;
+        status.className = 'lf-status ok';
+        status.textContent = 'Listo, ' + data['Nombre completo'].split(' ')[0] + '. Recibí tu solicitud y te escribo por WhatsApp para agendar.';
+      })
+      .catch(function () {
+        status.className = 'lf-status bad';
+        status.innerHTML = 'No pudimos enviar tu solicitud. Inténtalo de nuevo o escríbeme directo por <a href="https://wa.me/529991392123" target="_blank" rel="noopener">WhatsApp</a>.';
+      })
+      .then(function () {
+        submitBtn.removeAttribute('aria-busy');
+        submitBtn.textContent = 'Solicitar mi proyección';
+      });
+  });
+
   /* ---------- 5. Entrada escalonada ----------
      Hijos del hero: --sd = 90 ms × índice (CSS hace la animación al cargar).
      Lo demás: solo espera lo que está fuera de la primera pantalla. */

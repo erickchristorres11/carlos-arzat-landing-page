@@ -280,6 +280,65 @@ html{scrollbar-color:#cfc6c2 var(--white)}
   .calc-in{gap:24px}
 }
 
+/* ---------- 7b. Solicitud de asesoría ----------
+   Fondo claro de la tarjeta del hero, formulario blanco y botón en azul de marca. */
+.lead{background:var(--hero-bg);padding-block:var(--section)}
+.lead-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(36px,5vw,88px);align-items:start}
+.lead-copy h2{font:600 clamp(34px,3.8vw,54px)/1.08 var(--serif);letter-spacing:-.01em}
+.lead-copy > p{margin-top:18px;font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:var(--body);max-width:30em}
+.lead-steps{margin-top:32px;counter-reset:l}
+.lead-steps li{counter-increment:l;position:relative;padding:16px 0 16px 44px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--body)}
+.lead-steps li::before{content:counter(l);position:absolute;left:0;top:13px;font:600 24px/1.2 var(--serif);color:var(--blue-deep)}
+.lead-steps b{display:block;color:var(--head)}
+
+.lead-form{background:var(--white);border-radius:20px;padding:clamp(24px,3vw,44px);
+  box-shadow:0 1px 0 rgba(0,0,0,.03), 0 28px 56px -36px rgba(31,88,199,.45)}
+.lead-badge{background:#eef3fd;border-radius:12px;padding:14px 16px;font-size:14px;line-height:1.55;color:#24407a}
+.lead-badge b{display:block;color:var(--blue-deep)}
+.lf-grid{margin-top:26px;display:grid;grid-template-columns:1fr 1fr;gap:18px 20px}
+.lf{display:flex;flex-direction:column;gap:7px;min-width:0}
+.lf-wide{grid-column:1 / -1}
+.lf > span{font-size:14px;font-weight:500;color:var(--head)}
+.lf input,.lf select{
+  width:100%;min-width:0;height:50px;padding:0 14px;border:1.5px solid #ded7d3;border-radius:10px;background:var(--white);
+  font:400 16px/1 var(--sans);color:var(--head);transition:border-color .2s, box-shadow .2s;
+}
+.lf select{appearance:none;-webkit-appearance:none;padding-right:34px;cursor:pointer;
+  background:var(--white) url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='12' height='8' viewBox='0 0 12 8'%3E%3Cpath d='M1 1l5 5 5-5' fill='none' stroke='%231f58c7' stroke-width='1.8'/%3E%3C/svg%3E") no-repeat right 12px center}
+.lf input::placeholder{color:#716966}
+.lf input:hover,.lf select:hover{border-color:#bfb5b0}
+.lf input:focus,.lf select:focus{outline:0;border-color:var(--blue-deep);box-shadow:0 0 0 3px rgba(31,88,199,.15)}
+.tel{display:grid;grid-template-columns:118px 1fr;gap:8px}
+.lf-err{font-style:normal;font-size:13px;line-height:1.4;color:#b3261e;min-height:0}
+.lf-err:empty{display:none}
+.lf.invalid input,.lf.invalid select:not([name=lada]){border-color:#b3261e}
+.lf.warn select{border-color:#b3261e}
+
+.lf-warn{margin-top:18px;font-size:14px;line-height:1.55;color:#b3261e}
+.lf-warn a{color:inherit;font-weight:600}
+
+.lf-consent{margin-top:22px;display:grid;grid-template-columns:20px 1fr;gap:12px;align-items:start;font-size:13.5px;line-height:1.55;color:var(--body);cursor:pointer}
+.lf-consent input{width:18px;height:18px;margin:2px 0 0;accent-color:var(--blue-deep)}
+.lf-err-consent{display:block;margin-top:6px}
+.lf-honey{position:absolute;left:-9999px;width:1px;height:1px;opacity:0}
+
+.lf-submit{margin-top:24px;width:100%;height:58px;border:0;border-radius:12px;cursor:pointer;
+  background:var(--blue-deep);color:#fff;font:600 17px/1 var(--sans);
+  transition:background .2s, transform .4s var(--ease-out), box-shadow .4s var(--ease-out)}
+.lf-submit:hover:not(:disabled){background:#1a4aa8;transform:translateY(-2px);box-shadow:0 16px 30px -16px rgba(31,88,199,.7)}
+.lf-submit:disabled{background:#c9c2be;color:#fff;cursor:not-allowed}
+.lf-submit[aria-busy="true"]{background:var(--blue-deep);opacity:.75;cursor:progress}
+.lf-status{margin-top:14px;font-size:14.5px;line-height:1.55;text-align:center;color:var(--body)}
+.lf-status:empty{display:none}
+.lf-status.ok{color:var(--ret-ink);font-weight:500}
+.lf-status.bad{color:#b3261e}
+
+@media (max-width:1000px){.lead-grid{grid-template-columns:1fr}}
+@media (max-width:560px){
+  .lf-grid{grid-template-columns:1fr}
+  .tel{grid-template-columns:118px 1fr}
+}
+
 /* ---------- 8. Método: tres jugadas ---------- */
 .method{padding-block:var(--section);background:var(--hero-bg)}
 .moves{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:m}

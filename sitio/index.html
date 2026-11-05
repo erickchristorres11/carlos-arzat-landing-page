@@ -326,6 +326,106 @@
     </div>
   </section>
 
+  <!-- ============ SOLICITUD DE ASESORÍA ============
+       Formulario que llega por correo al asesor (FormSubmit, sin servidor propio).
+       Correo de prueba: erickarzat11@gmail.com. Para cambiarlo, editar LEAD_EMAIL en main.js. -->
+  <section class="lead" id="solicitud" aria-labelledby="t-solicitud">
+    <div class="wrap lead-grid">
+      <div class="lead-copy seq">
+        <h2 id="t-solicitud">Recibe tu proyección personalizada</h2>
+        <p>Déjame tus datos y te contacto para revisar tu retiro con tus números reales: tu Afore, tu capacidad de ahorro y el plan que mejor te acomode.</p>
+        <ol class="lead-steps">
+          <li><b>Me llega tu solicitud.</b> Solo yo la recibo y la trato de forma confidencial.</li>
+          <li><b>Te escribo por WhatsApp.</b> Para agendar una llamada corta en el horario que te acomode.</li>
+          <li><b>Revisamos tu proyección.</b> Sin costo y sin compromiso de contratar.</li>
+        </ol>
+      </div>
+
+      <form class="lead-form seq" id="lead-form" novalidate>
+        <p class="lead-badge"><b>Asesoría informativa sin costo.</b> Te explico los supuestos de tu proyección y las condiciones de cada plan antes de cualquier decisión.</p>
+
+        <div class="lf-grid">
+          <label class="lf lf-wide">
+            <span>Nombre completo</span>
+            <input name="nombre" type="text" autocomplete="name" required minlength="3" maxlength="80">
+            <em class="lf-err" aria-live="polite"></em>
+          </label>
+          <label class="lf lf-wide">
+            <span>Correo electrónico</span>
+            <input name="email" type="email" autocomplete="email" required maxlength="120">
+            <em class="lf-err" aria-live="polite"></em>
+          </label>
+          <label class="lf">
+            <span>Edad</span>
+            <input name="edad" type="number" inputmode="numeric" min="18" max="65" placeholder="18 a 65" required>
+            <em class="lf-err" aria-live="polite"></em>
+          </label>
+          <label class="lf">
+            <span>Profesión</span>
+            <input name="profesion" type="text" autocomplete="organization-title" required maxlength="60">
+            <em class="lf-err" aria-live="polite"></em>
+          </label>
+
+          <div class="lf lf-wide" role="group" aria-labelledby="lf-tel">
+            <span id="lf-tel">Teléfono (WhatsApp)</span>
+            <div class="tel">
+              <select name="lada" aria-label="Código de país" autocomplete="tel-country-code">
+                <option value="+52" selected>+52 MX</option>
+                <option value="+1">+1 US/CA</option>
+                <option value="+34">+34 ES</option>
+                <option value="+57">+57 CO</option>
+                <option value="+502">+502 GT</option>
+              </select>
+              <input name="telefono" type="tel" inputmode="numeric" autocomplete="tel-national" placeholder="999 123 4567" required aria-label="Número de teléfono a 10 dígitos">
+            </div>
+            <em class="lf-err" aria-live="polite"></em>
+          </div>
+
+          <label class="lf">
+            <span>Inversión mensual estimada</span>
+            <select name="inversion" required>
+              <option value="$2,000">$2,000</option>
+              <option value="$3,000">$3,000</option>
+              <option value="$4,000">$4,000</option>
+              <option value="$5,000">$5,000</option>
+              <option value="$6,000">$6,000</option>
+              <option value="$7,000">$7,000</option>
+              <option value="$8,000">$8,000</option>
+              <option value="$9,000">$9,000</option>
+              <option value="$10,000">$10,000</option>
+            </select>
+          </label>
+          <label class="lf">
+            <span>Ingresos mensuales</span>
+            <select name="ingresos" id="lf-ingresos" required>
+              <option value="" selected disabled>Selecciona un rango</option>
+              <option value="menos de $10,000">Menos de $10,000</option>
+              <option value="$10,000 a $20,000">$10,000 a $20,000</option>
+              <option value="$20,000 a $40,000">$20,000 a $40,000</option>
+              <option value="$40,000 a $70,000">$40,000 a $70,000</option>
+              <option value="más de $70,000">Más de $70,000</option>
+            </select>
+            <em class="lf-err" aria-live="polite"></em>
+          </label>
+        </div>
+
+        <p class="lf-warn" id="lf-warn" hidden>Esta solicitud está orientada a personas con capacidad de ahorro desde $2,000 MXN mensuales. Si este monto no se ajusta a tu situación, consulta la <a href="#retiro">calculadora referencial</a> sin enviar tus datos.</p>
+
+        <label class="lf-consent">
+          <input type="checkbox" name="consentimiento" required>
+          <span>Acepto que Carlos Arzat use estos datos solo para contactarme sobre mi asesoría, conforme al aviso de privacidad.</span>
+        </label>
+        <em class="lf-err lf-err-consent" aria-live="polite"></em>
+
+        <!-- Trampa para bots: los humanos no la ven -->
+        <input type="text" name="_honey" class="lf-honey" tabindex="-1" autocomplete="off" aria-hidden="true">
+
+        <button class="lf-submit" id="lf-submit" type="submit">Solicitar mi proyección</button>
+        <p class="lf-status" id="lf-status" role="status" aria-live="polite"></p>
+      </form>
+    </div>
+  </section>
+
   <!-- ============ MÉTODO ============
        Las tres etapas de una partida de ajedrez: apertura, medio juego y final.
        El tablero de cada paso marca el avance de la pieza. -->

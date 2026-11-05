@@ -68,69 +68,104 @@
     });
   });
 
-  /* ---------- 3. Calculadora 50/30/20 ---------- */
-  var ingreso = document.getElementById('ingreso');
-  function calc() {
-    var n = readMoney(ingreso);
-    document.getElementById('r50').textContent = money(n * 0.5);
-    document.getElementById('r30').textContent = money(n * 0.3);
-    document.getElementById('r20').textContent = money(n * 0.2);
-    // Meta: meses para juntarla con el 20 % y fecha aproximada
-    var meta = readMoney(metaIn), ahorro = n * 0.2;
-    var mesesEl = document.getElementById('r-meses'), fechaEl = document.getElementById('r-fecha');
-    if (!ahorro || !meta) { mesesEl.textContent = '—'; fechaEl.textContent = '—'; return; }
-    var m = Math.ceil(meta / ahorro), d = new Date();
-    d.setMonth(d.getMonth() + m);
-    mesesEl.textContent = m === 1 ? '1 mes' : fmt.format(m) + ' meses';
-    fechaEl.textContent = d.toLocaleDateString('es-MX', { month: 'long', year: 'numeric' });
-  }
-  var metaIn = document.getElementById('meta');
-  metaIn.addEventListener('input', calc);
-  metaIn.addEventListener('blur', function () { formatField(metaIn); });
-  ingreso.addEventListener('input', calc);
-  ingreso.addEventListener('blur', function () { formatField(ingreso); });
-  calc();
-
-  /* ---------- 4. Simulador de inflación ----------
-     costo futuro = gasto × (1 + inflación)^años. Ilustrativo, inflación constante. */
-  var gasto = document.getElementById('gasto');
-  var anos = document.getElementById('anos');
-  var inf = document.getElementById('inf');
-  var line = document.getElementById('curve-line');
-  var area = document.getElementById('curve-area');
-
+  /* Pinta el relleno de un slider y devuelve su valor numérico */
   function fill(range) {
     var p = (range.value - range.min) / (range.max - range.min) * 100;
     range.style.setProperty('--p', p + '%');
+    return +range.value;
+  }
+  var $ = function (id) { return document.getElementById(id); };
+  var pct = function (n) { return (+n).toFixed(1) + ' %'; };
+  var anosTxt = function (n) { return n === 1 ? '1 año' : n + ' años'; };
+
+  /* Liga campos y sliders a una función de cálculo */
+  function bind(ids, fn) {
+    ids.forEach(function (id) {
+      var el = $(id);
+      el.addEventListener('input', fn);
+      if (el.type === 'text') el.addEventListener('blur', function () { formatField(el); });
+    });
+    fn();
   }
 
-  function sim() {
-    var g = readMoney(gasto);
-    var n = +anos.value;
-    var r = +inf.value / 100;
-    var fut = g * Math.pow(1 + r, n);
+  /* ---------- 3. Proyección de Afore + PPR ----------
+     Todo en pesos de hoy con rendimientos reales (ya sin inflación).
+     Valor futuro = saldo × (1 + r)^n + aportación × [(1 + r_m)^(12n) − 1] / r_m,
+     con r_m = (1 + r)^(1/12) − 1 (capitalización mensual). */
+  function fv(saldo, mensual, r, years) {
+    var rm = Math.pow(1 + r, 1 / 12) - 1, m = years * 12;
+    var crece = Math.pow(1 + rm, m);
+    return saldo * crece + (rm ? mensual * (crece - 1) / rm : mensual * m);
+  }
 
-    document.getElementById('o-anos').textContent = n;
-    document.getElementById('o-inf').textContent = (+inf.value).toFixed(1) + ' %';
-    document.getElementById('futuro').textContent = money(fut);
-    document.getElementById('axis-end').textContent = 'En ' + n + ' años';
-    fill(anos); fill(inf);
+  var edad = $('edad'), edadRet = $('retiro-edad');
+  function retiro() {
+    var e = fill(edad), er = fill(edadRet);
+    // La edad de retiro nunca queda por debajo de la edad actual + 1
+    if (er <= e) { er = Math.min(70, e + 1); edadRet.value = er; fill(edadRet); }
+    var n = Math.max(1, er - e);
+    var saldo = readMoney($('afore-saldo')), apoA = readMoney($('afore-apo'));
+    var rA = fill($('afore-r')) / 100, apoP = fill($('ppr-apo')), rP = fill($('ppr-r')) / 100;
 
-    document.getElementById('axis-start').textContent = money(g);
-    // Curva: la base es el gasto de hoy (a 40 % de altura) y el techo
-    // se ajusta al resultado, así siempre se lee cuánto crece
-    var W = 320, H = 118, maxF = Math.max(Math.pow(1 + r, n), 2.2), pts = [];
+    var afore = fv(saldo, apoA, rA, n), ppr = fv(0, apoP, rP, n), total = afore + ppr;
+
+    $('o-edad').textContent = anosTxt(e);
+    $('o-retiro').textContent = anosTxt(er);
+    $('o-afore-r').textContent = pct(rA * 100);
+    $('o-ppr').textContent = money(apoP);
+    $('o-ppr-r').textContent = pct(rP * 100);
+    $('r-edad-fin').textContent = er;
+    $('r-total').textContent = money(total);
+    $('r-anos').textContent = anosTxt(n);
+    $('r-afore').textContent = money(afore);
+    $('r-ppr').textContent = money(ppr);
+    $('r-mes').textContent = money(total / 240);
+    $('ch-end').textContent = er + ' años';
+
+    // Gráfica apilada año con año
+    var W = 320, H = 120, top = Math.max(total, 1), ptsA = [], ptsT = [];
     for (var i = 0; i <= n; i++) {
-      var x = (i / n) * W;
-      var y = H - (Math.pow(1 + r, i) / maxF) * (H - 6);
-      pts.push(x.toFixed(1) + ' ' + y.toFixed(1));
+      var x = (i / n * W).toFixed(1);
+      var a = fv(saldo, apoA, rA, i), t = a + fv(0, apoP, rP, i);
+      ptsA.push(x + ' ' + (H - a / top * (H - 4)).toFixed(1));
+      ptsT.push(x + ' ' + (H - t / top * (H - 4)).toFixed(1));
     }
-    line.setAttribute('d', 'M' + pts.join(' L'));
-    area.setAttribute('d', 'M0 ' + H + ' L' + pts.join(' L') + ' L' + W + ' ' + H + ' Z');
+    $('ch-afore').setAttribute('d', 'M0 ' + H + ' L' + ptsA.join(' L') + ' L' + W + ' ' + H + ' Z');
+    $('ch-ppr').setAttribute('d', 'M' + ptsT.join(' L') + ' L' + ptsA.slice().reverse().join(' L') + ' Z');
+
+    $('ret-wa').href = WA + encodeURIComponent(
+      'Hola Carlos, hice la proyección de retiro: tengo ' + e + ' años, quiero retirarme a los ' + er +
+      ' y me gustaría revisar mi Afore y un PPR de ' + money(apoP) + ' al mes.');
   }
-  [gasto, anos, inf].forEach(function (el) { el.addEventListener('input', sim); });
-  gasto.addEventListener('blur', function () { formatField(gasto); });
-  sim();
+  bind(['edad', 'retiro-edad', 'afore-saldo', 'afore-apo', 'afore-r', 'ppr-apo', 'ppr-r'], retiro);
+
+  /* ---------- 4. Suma asegurada por método de necesidades ----------
+     Suma = ingreso mensual × 12 × años + deudas + educación + gastos finales − lo que ya tienes. */
+  function proteccion() {
+    var ing = readMoney($('pro-ingreso')), anos = fill($('pro-anos'));
+    var cIng = ing * 12 * anos, cDeu = readMoney($('pro-deudas')), cEdu = readMoney($('pro-edu'));
+    var cFin = readMoney($('pro-finales')), tienes = readMoney($('pro-tienes'));
+    var bruto = cIng + cDeu + cEdu + cFin, total = Math.max(0, bruto - tienes);
+
+    $('o-pro-anos').textContent = anosTxt(anos);
+    $('p-total').textContent = money(total);
+    var veces = ing ? total / (ing * 12) : 0;
+    var vr = veces >= 10 ? Math.round(veces) : Math.round(veces * 10) / 10;
+    $('p-veces').textContent = vr + (vr === 1 ? ' año' : ' años');
+    $('p-ing').textContent = money(cIng);
+    $('p-deu').textContent = money(cDeu);
+    $('p-edu').textContent = money(cEdu);
+    $('p-fin').textContent = money(cFin);
+    $('p-tienes').textContent = money(tienes);
+
+    // Barra de composición proporcional a cada necesidad
+    var parts = $('pro-bar').children, vals = [cIng, cDeu, cEdu, cFin];
+    for (var i = 0; i < parts.length; i++) parts[i].style.flex = (bruto ? vals[i] / bruto : 0) + ' 1 0';
+
+    $('pro-wa').href = WA + encodeURIComponent(
+      'Hola Carlos, calculé una suma asegurada de ' + money(total) + ' y me gustaría cotizar mi protección.');
+  }
+  bind(['pro-ingreso', 'pro-anos', 'pro-deudas', 'pro-edu', 'pro-finales', 'pro-tienes'], proteccion);
 
   /* ---------- 5. Entrada escalonada ----------
      Hijos del hero: --sd = 90 ms × índice (CSS hace la animación al cargar).
@@ -156,15 +191,6 @@
     }, { threshold: 0.1, rootMargin: '0px 0px -8% 0px' });
     items.forEach(function (el) { if (el.classList.contains('wait')) io.observe(el); });
   }
-
-  /* ---------- 5b. La curva de inflación se dibuja una vez al entrar en pantalla ---------- */
-  var curve = document.getElementById('curve');
-  if (!reduce && 'IntersectionObserver' in window) {
-    var co = new IntersectionObserver(function (e) {
-      if (e[0].isIntersecting) { curve.classList.add('drawn'); co.disconnect(); }
-    }, { threshold: 0.5 });
-    co.observe(curve);
-  } else curve.classList.add('drawn');
 
   /* ---------- 6. Botón flotante ----------
      Aparece cuando el botón del hero sale de pantalla y se oculta en el footer. */

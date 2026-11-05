@@ -23,9 +23,9 @@
   <a class="mono" href="#inicio" aria-label="Carlos Arzat, inicio">Ca<span>.</span></a>
   <nav aria-label="Principal">
     <ul>
-      <li><a href="#servicios">Servicios</a></li>
+      <li><a href="#retiro">Retiro</a></li>
+      <li><a href="#proteccion">Protección</a></li>
       <li><a href="#metodo">Método</a></li>
-      <li><a href="#carlos">Sobre mí</a></li>
       <li><a href="#contacto">Contacto</a></li>
     </ul>
   </nav>
@@ -91,100 +91,239 @@
     </blockquote>
   </section>
 
-  <!-- ============ SERVICIOS ============
-       Tarjetas pastel de la referencia (fondo + tinta del mismo tono).
-       En lugar de una captura de pantalla, cada tarjeta trae una herramienta que se puede usar. -->
-  <section class="services wrap" id="servicios" aria-labelledby="t-servicios">
-    <header class="sec-head seq">
-      <h2 id="t-servicios">Tres frentes, un solo plan</h2>
-      <p>Cada plan combina tus finanzas de hoy, tu retiro y tu protección, en el orden que tu situación pide. Pruébalo con tus propios números.</p>
-    </header>
+  <!-- ============ CONSTRUCCIÓN DE FONDO DE RETIRO ============
+       Banda verde (pareja pastel de la referencia). Calculadora Afore + PPR,
+       preguntas frecuentes y quién asesora. Todo en pesos de hoy. -->
+  <section class="plan plan-ret" id="retiro" aria-labelledby="t-retiro">
+    <div class="wrap">
+      <header class="plan-head seq">
+        <h2 id="t-retiro">Construcción de fondo de retiro</h2>
+        <p>Tu Afore es la base; un Plan Personal de Retiro (PPR) cubre la diferencia. Proyecta ambos con tus números y mira cuánto tendrías al retirarte.</p>
+      </header>
 
-    <div class="cards">
-      <!-- Pilar 1: calculadora 50/30/20 -->
-      <article class="card c-fin seq" aria-labelledby="t-fin">
-        <h3 id="t-fin">Finanzas personales</h3>
-        <p class="card-text">Metas con monto y fecha, la regla 50/30/20 y el “Presupuesto Power” para registrar tus ingresos, detectar fugas y asegurar tu ahorro cada mes.</p>
-
-        <a class="more" href="#contacto" data-tema="ordenar mis finanzas">Quiero ordenar mis finanzas<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
-
-        <div class="tool" id="calc">
-          <label class="field">
-            <span>Tu ingreso mensual neto</span>
-            <span class="money"><b aria-hidden="true">$</b><input id="ingreso" type="text" inputmode="numeric" autocomplete="off" value="30,000" aria-describedby="calc-hint"></span>
+      <div class="calc seq" id="calc-ret">
+        <form class="calc-in" aria-label="Datos para la proyección de retiro" onsubmit="return false">
+          <label class="range">
+            <span>Edad actual <output id="o-edad">30 años</output></span>
+            <input id="edad" type="range" min="18" max="64" step="1" value="30">
+            <span class="ends" aria-hidden="true"><i>18</i><i>64</i></span>
           </label>
-          <p class="hint" id="calc-hint">Escribe tu ingreso y mira cómo se reparte.</p>
-          <div class="split" aria-hidden="true"><i class="s50"></i><i class="s30"></i><i class="s20"></i></div>
-          <dl class="split-legend" aria-live="polite">
-            <div><dt><i class="s50"></i>Necesidades · 50 %</dt><dd id="r50">$15,000</dd></div>
-            <div><dt><i class="s30"></i>Deseos · 30 %</dt><dd id="r30">$9,000</dd></div>
-            <div><dt><i class="s20"></i>Ahorro e inversión · 20 %</dt><dd id="r20">$6,000</dd></div>
+          <label class="range">
+            <span>Edad de retiro <output id="o-retiro">65 años</output></span>
+            <input id="retiro-edad" type="range" min="55" max="70" step="1" value="65">
+            <span class="ends" aria-hidden="true"><i>55</i><i>70</i></span>
+          </label>
+
+          <fieldset class="block">
+            <legend>Afore</legend>
+            <div class="pair">
+              <label class="field">
+                <span>Saldo actual</span>
+                <span class="money"><b aria-hidden="true">$</b><input id="afore-saldo" type="text" inputmode="numeric" autocomplete="off" value="150,000"></span>
+              </label>
+              <label class="field">
+                <span>Aportación mensual</span>
+                <span class="money"><b aria-hidden="true">$</b><input id="afore-apo" type="text" inputmode="numeric" autocomplete="off" value="1,500"></span>
+              </label>
+            </div>
+            <p class="hint">Ambos datos vienen en tu estado de cuenta. La aportación incluye la tuya, la de tu patrón y la del gobierno.</p>
+            <label class="range">
+              <span>Rendimiento real supuesto <output id="o-afore-r">4.0 %</output></span>
+              <input id="afore-r" type="range" min="1" max="6" step="0.5" value="4">
+            </label>
+          </fieldset>
+
+          <fieldset class="block">
+            <legend>Plan Personal de Retiro (PPR)</legend>
+            <label class="range">
+              <span>Aportación mensual <output id="o-ppr">$2,500</output></span>
+              <input id="ppr-apo" type="range" min="0" max="20000" step="500" value="2500">
+              <span class="ends" aria-hidden="true"><i>$0</i><i>$20,000</i></span>
+            </label>
+            <label class="range">
+              <span>Rendimiento real supuesto <output id="o-ppr-r">5.0 %</output></span>
+              <input id="ppr-r" type="range" min="1" max="8" step="0.5" value="5">
+            </label>
+          </fieldset>
+        </form>
+
+        <div class="calc-out" aria-live="polite">
+          <p class="out-label">A los <span id="r-edad-fin">65</span> años tendrías</p>
+          <p class="out-total" id="r-total">$0</p>
+          <p class="out-sub">en pesos de hoy, después de <b id="r-anos">35 años</b> de ahorro</p>
+
+          <svg class="stack" id="ret-chart" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Crecimiento del fondo de Afore y del PPR año con año">
+            <path class="a-afore" id="ch-afore" d=""/>
+            <path class="a-ppr" id="ch-ppr" d=""/>
+          </svg>
+          <div class="stack-axis"><span>Hoy</span><span id="ch-end">65 años</span></div>
+
+          <dl class="out-rows">
+            <div><dt><i class="k-afore"></i>Fondo Afore</dt><dd id="r-afore">$0</dd></div>
+            <div><dt><i class="k-ppr"></i>Fondo PPR</dt><dd id="r-ppr">$0</dd></div>
+            <div><dt>Ingreso mensual estimado</dt><dd id="r-mes">$0</dd></div>
           </dl>
-          <div class="goal">
-            <label class="field">
-              <span>Tu meta</span>
-              <span class="money"><b aria-hidden="true">$</b><input id="meta" type="text" inputmode="numeric" autocomplete="off" value="100,000"></span>
-            </label>
-            <p class="year" aria-live="polite">Con tu 20 % la alcanzas en <b id="r-meses">17 meses</b>, hacia <b id="r-fecha">abril de 2028</b>.</p>
+          <p class="out-note">El ingreso mensual reparte el fondo en 20 años de retiro, sin rendimiento posterior.</p>
+
+          <a class="out-cta" id="ret-wa" href="https://wa.me/529991392123" target="_blank" rel="noopener">Revisar mi retiro con Carlos<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <p class="out-fine">Simulación referencial con rendimientos reales (ya descontada la inflación), no garantizados. No incluye comisiones ni impuestos y no constituye asesoría fiscal.</p>
+        </div>
+      </div>
+
+      <div class="plan-foot">
+        <div class="faq seq">
+          <h3>Preguntas frecuentes</h3>
+          <details>
+            <summary>¿Qué diferencia hay entre la Afore y un PPR?</summary>
+            <p>La Afore es tu cuenta obligatoria de retiro: ahí llegan tus aportaciones, las de tu patrón y las del gobierno. Un PPR es un plan voluntario que contratas tú para complementar lo que la Afore no alcance a cubrir.</p>
+          </details>
+          <details>
+            <summary>¿Mi Afore me alcanzará para retirarme?</summary>
+            <p>Depende de tu régimen (Ley 73 o Ley 97), de tus semanas cotizadas y de tu salario. Por eso el primer paso es proyectarla con tu estado de cuenta real: la diferencia entre lo que tendrás y lo que vas a gastar es la brecha que cubre el PPR.</p>
+          </details>
+          <details>
+            <summary>¿Las aportaciones a un PPR son deducibles?</summary>
+            <p>Ciertos planes personales de retiro pueden deducirse del ISR dentro de los límites que marca la ley. Si te conviene depende de tu situación fiscal, así que lo revisamos caso por caso y, si hace falta, junto con tu contador.</p>
+          </details>
+          <details>
+            <summary>¿Qué pasa si necesito el dinero antes?</summary>
+            <p>Retirar antes de la edad pactada puede implicar penalizaciones y la pérdida de beneficios fiscales. Por eso dimensionamos la aportación a tu capacidad real y separamos tu fondo de emergencia.</p>
+          </details>
+          <details>
+            <summary>¿Por qué la calculadora usa rendimientos “reales”?</summary>
+            <p>Un rendimiento real ya tiene descontada la inflación. Así el resultado se lee en pesos de hoy: si ves $20,000 al mes, es lo que hoy comprarías con $20,000.</p>
+          </details>
+        </div>
+
+        <aside class="advisor seq" aria-labelledby="t-asesor-ret">
+          <h3 id="t-asesor-ret">Quién te asesora y cómo lo hace</h3>
+          <div class="who">
+            <span class="who-mono" aria-hidden="true">CA</span>
+            <p><b>Carlos Arzat</b><br>Lic. en Actuaría, cédula 12355703 · Agente certificado CNSF C371460</p>
           </div>
-        </div>
-      </article>
-
-      <!-- Pilar 2: simulador de inflación -->
-      <article class="card c-ret seq" aria-labelledby="t-ret">
-        <h3 id="t-ret">Retiro</h3>
-        <p class="card-text">Planeamos tu retiro considerando tu ahorro en la Afore, la inflación y los gastos mensuales que tendrás. Así se ve lo que la inflación le hace a tu gasto de hoy.</p>
-
-        <a class="more" href="#contacto" data-tema="planear mi retiro">Quiero planear mi retiro<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
-
-        <div class="tool" id="sim">
-          <div class="sim-inputs">
-            <label class="field">
-              <span>Gasto mensual hoy</span>
-              <span class="money"><b aria-hidden="true">$</b><input id="gasto" type="text" inputmode="numeric" autocomplete="off" value="25,000"></span>
-            </label>
-            <label class="range">
-              <span>Años para tu retiro <output id="o-anos" for="anos">25</output></span>
-              <input id="anos" type="range" min="5" max="40" step="1" value="25">
-            </label>
-            <label class="range">
-              <span>Inflación anual <output id="o-inf" for="inf">4.0 %</output></span>
-              <input id="inf" type="range" min="2" max="8" step="0.5" value="4">
-            </label>
-          </div>
-          <div class="sim-out">
-            <p class="big">Ese mismo gasto costará <b><span id="futuro">$66,646</span> <small>al mes</small></b></p>
-            <svg class="curve" id="curve" viewBox="0 0 320 120" preserveAspectRatio="none" role="img" aria-label="Curva del costo mensual año con año hasta tu retiro">
-              <path class="area" id="curve-area" d=""/>
-              <path class="line" id="curve-line" d="" pathLength="1"/>
-              <line class="base" x1="0" y1="119" x2="320" y2="119"/>
-            </svg>
-            <div class="curve-axis"><span>Hoy · <b id="axis-start">$25,000</b></span><span id="axis-end">En 25 años</span></div>
-          </div>
-          <p class="fine">Simulación ilustrativa con inflación constante. No es una proyección de rendimientos.</p>
-        </div>
-      </article>
-
-      <!-- Pilar 3: previsión, Vida y GMM -->
-      <article class="card c-pre seq" aria-labelledby="t-pre">
-        <div class="pre-copy">
-          <h3 id="t-pre">Previsión</h3>
-          <p class="card-text">Que un imprevisto no deshaga lo que construiste. Diseñamos tu protección con Allianz, AXA y Mapfre.</p>
-          <a class="more" href="#contacto" data-tema="proteger a mi familia">Quiero proteger a mi familia<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.6"/></svg></a>
-        </div>
-        <div class="pre-grid">
-          <section class="cover">
-            <h4>Seguro de Vida</h4>
-            <p>Ingresos para tu familia en caso de fallecimiento o invalidez. Lo que tú aportas cada mes sigue llegando a casa.</p>
-          </section>
-          <section class="cover">
-            <h4>Gastos Médicos Mayores</h4>
-            <p>Hospitalización, cirugía y tratamiento sin tocar tus ahorros. Una enfermedad no debería costarte tu patrimonio.</p>
-          </section>
-        </div>
-      </article>
+          <ol class="how">
+            <li><b>Revisamos tu Afore.</b> Tu estado de cuenta, tu régimen y tus semanas cotizadas.</li>
+            <li><b>Proyectamos tu pensión.</b> Calculamos cuánto tendrías y cuánto te faltaría para el retiro que quieres.</li>
+            <li><b>Construimos tu PPR.</b> Elegimos el plan y la aportación que puedes sostener, y le damos seguimiento cada año.</li>
+          </ol>
+        </aside>
+      </div>
     </div>
+  </section>
 
+  <!-- ============ PROTECCIÓN PERSONAL / FAMILIAR ============
+       Banda rosada (pareja pastel de la referencia). Calculadora de suma asegurada
+       por método de necesidades, preguntas frecuentes y quién asesora. -->
+  <section class="plan plan-pro" id="proteccion" aria-labelledby="t-proteccion">
+    <div class="wrap">
+      <header class="plan-head seq">
+        <h2 id="t-proteccion">Protección personal y familiar</h2>
+        <p>¿Cuánto seguro de vida necesitas de verdad? Suma lo que tu familia necesitaría sin ti y resta lo que ya tienes. Ese es el cálculo.</p>
+      </header>
+
+      <div class="calc seq" id="calc-pro">
+        <form class="calc-in" aria-label="Datos para calcular la suma asegurada" onsubmit="return false">
+          <fieldset class="block">
+            <legend>Ingreso de tu familia</legend>
+            <label class="field">
+              <span>Ingreso mensual que aportas a tu hogar</span>
+              <span class="money"><b aria-hidden="true">$</b><input id="pro-ingreso" type="text" inputmode="numeric" autocomplete="off" value="30,000"></span>
+            </label>
+            <label class="range">
+              <span>Años que tu familia lo necesitaría <output id="o-pro-anos">10 años</output></span>
+              <input id="pro-anos" type="range" min="1" max="25" step="1" value="10">
+              <span class="ends" aria-hidden="true"><i>1</i><i>25</i></span>
+            </label>
+            <p class="hint">Una guía útil: los años que faltan para que tu hijo menor termine de estudiar.</p>
+          </fieldset>
+
+          <fieldset class="block">
+            <legend>Compromisos por cubrir</legend>
+            <div class="pair">
+              <label class="field">
+                <span>Deudas pendientes</span>
+                <span class="money"><b aria-hidden="true">$</b><input id="pro-deudas" type="text" inputmode="numeric" autocomplete="off" value="500,000"></span>
+              </label>
+              <label class="field">
+                <span>Educación de tus hijos</span>
+                <span class="money"><b aria-hidden="true">$</b><input id="pro-edu" type="text" inputmode="numeric" autocomplete="off" value="400,000"></span>
+              </label>
+            </div>
+            <p class="hint">Hipoteca, auto y créditos; y lo que falte pagar de colegiaturas.</p>
+            <label class="field">
+              <span>Gastos finales</span>
+              <span class="money"><b aria-hidden="true">$</b><input id="pro-finales" type="text" inputmode="numeric" autocomplete="off" value="60,000"></span>
+            </label>
+          </fieldset>
+
+          <fieldset class="block">
+            <legend>Lo que ya tienes</legend>
+            <label class="field">
+              <span>Seguros de vida actuales y ahorros disponibles</span>
+              <span class="money"><b aria-hidden="true">$</b><input id="pro-tienes" type="text" inputmode="numeric" autocomplete="off" value="200,000"></span>
+            </label>
+          </fieldset>
+        </form>
+
+        <div class="calc-out" aria-live="polite">
+          <p class="out-label">Suma asegurada sugerida</p>
+          <p class="out-total" id="p-total">$0</p>
+          <p class="out-sub">equivale a <b id="p-veces">0 años</b> de tu ingreso</p>
+
+          <div class="bar" id="pro-bar" aria-hidden="true"><i class="k-ing"></i><i class="k-deu"></i><i class="k-edu"></i><i class="k-fin"></i></div>
+
+          <dl class="out-rows">
+            <div><dt><i class="k-ing"></i>Ingreso para tu familia</dt><dd id="p-ing">$0</dd></div>
+            <div><dt><i class="k-deu"></i>Deudas</dt><dd id="p-deu">$0</dd></div>
+            <div><dt><i class="k-edu"></i>Educación</dt><dd id="p-edu">$0</dd></div>
+            <div><dt><i class="k-fin"></i>Gastos finales</dt><dd id="p-fin">$0</dd></div>
+            <div class="minus"><dt>Menos lo que ya tienes</dt><dd id="p-tienes">$0</dd></div>
+          </dl>
+
+          <a class="out-cta" id="pro-wa" href="https://wa.me/529991392123" target="_blank" rel="noopener">Cotizar mi protección con Carlos<svg aria-hidden="true" viewBox="0 0 20 12" width="18" height="11"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></a>
+          <p class="out-fine">Estimación por método de necesidades, en pesos de hoy. La suma final y su costo dependen de tu edad, tu salud y la aprobación de la aseguradora.</p>
+        </div>
+      </div>
+
+      <div class="plan-foot">
+        <div class="faq seq">
+          <h3>Preguntas frecuentes</h3>
+          <details>
+            <summary>¿Cómo se calcula la suma asegurada?</summary>
+            <p>Con el método de necesidades: el ingreso que tu familia dejaría de recibir durante los años que lo necesita, más deudas, educación y gastos finales, menos los seguros y ahorros que ya tienes. Es el mismo cálculo de esta calculadora, hecho con tus cifras reales.</p>
+          </details>
+          <details>
+            <summary>¿Seguro temporal o de por vida?</summary>
+            <p>Un seguro temporal protege un periodo definido (por ejemplo, mientras pagas la hipoteca o tus hijos estudian) y suele costar menos. Uno de por vida o con ahorro te cubre siempre y acumula un valor. Elegimos según lo que necesitas cubrir y por cuánto tiempo.</p>
+          </details>
+          <details>
+            <summary>¿También necesito Gastos Médicos Mayores?</summary>
+            <p>Son coberturas distintas. El seguro de vida protege el ingreso de tu familia si tú faltas; Gastos Médicos Mayores paga hospitalización, cirugía y tratamientos para que una enfermedad no consuma tus ahorros. Lo ideal es revisar ambos.</p>
+          </details>
+          <details>
+            <summary>Ya tengo seguro por mi trabajo, ¿es suficiente?</summary>
+            <p>Súmalo en “lo que ya tienes”. Ten en cuenta que los seguros de grupo suelen terminar cuando dejas la empresa, y su suma no siempre corresponde a lo que tu familia necesitaría.</p>
+          </details>
+          <details>
+            <summary>¿Qué necesito para contratar?</summary>
+            <p>Una identificación y un cuestionario de salud. Según tu edad y la suma asegurada, la aseguradora puede pedir exámenes médicos. Te acompaño en todo el proceso.</p>
+          </details>
+        </div>
+
+        <aside class="advisor seq" aria-labelledby="t-asesor-pro">
+          <h3 id="t-asesor-pro">Quién te asesora y cómo lo hace</h3>
+          <div class="who">
+            <span class="who-mono" aria-hidden="true">CA</span>
+            <p><b>Carlos Arzat</b><br>Lic. en Actuaría, cédula 12355703 · Agente certificado CNSF C371460</p>
+          </div>
+          <ol class="how">
+            <li><b>Calculamos tu suma asegurada.</b> Con este mismo método y tus cifras reales, de forma confidencial.</li>
+            <li><b>Comparamos opciones.</b> Vida y Gastos Médicos Mayores con Allianz, AXA y Mapfre, según tu edad y presupuesto.</li>
+            <li><b>Te acompaño después.</b> En la contratación, en cada renovación y en cualquier trámite con la aseguradora.</li>
+          </ol>
+        </aside>
+      </div>
+    </div>
   </section>
 
   <!-- ============ MÉTODO ============

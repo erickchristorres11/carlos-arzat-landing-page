@@ -120,8 +120,9 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .pick-note b{color:var(--head);font-weight:500}
 
 /* Video de presentación: sobresale de la tarjeta por arriba, como el retrato de la referencia */
-.intro-video{grid-area:photo;position:relative;z-index:2;align-self:start;justify-self:center;width:min(100%,400px);margin:-44px clamp(20px,3vw,48px) 32px 0}
-.iv-frame{position:relative;aspect-ratio:4 / 5;border-radius:20px;overflow:hidden;background:var(--fun-bg);
+/* Alineado con el título arriba y con el final del texto abajo: ocupa toda la altura de la columna */
+.intro-video{grid-area:photo;position:relative;z-index:2;align-self:stretch;justify-self:end;display:flex;flex-direction:column;width:calc(100% - clamp(28px,5vw,72px));max-width:440px;margin:calc(clamp(40px,4.6vw,68px) + 8px) clamp(28px,5vw,72px) 44px 0}
+.iv-frame{position:relative;flex:1;min-height:420px;border-radius:20px;overflow:hidden;background:var(--fun-bg);
   box-shadow:0 2px 0 rgba(0,0,0,.03), 0 30px 60px -34px rgba(31,88,199,.55)}
 .iv-frame video{display:block;width:100%;height:100%;object-fit:cover;background:var(--fun-bg)}
 .iv-play{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:10px;
@@ -147,7 +148,8 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 
 @media (max-width:1000px){
   .hero-card{grid-template-columns:1fr;grid-template-areas:"photo" "copy" "creds"}
-  .intro-video{width:min(84%,360px);margin:-48px auto 0}
+  .intro-video{align-self:start;width:min(84%,360px);margin:-48px auto 0}
+  .iv-frame{flex:none;min-height:0;aspect-ratio:4 / 5}
   .hero-copy{padding:36px 28px 40px;max-width:none}
   .creds{grid-template-columns:1fr 1fr}
   .creds div:first-child{padding-left:28px}
@@ -186,7 +188,8 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .plan-head p{margin-top:16px;font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:var(--c);max-width:36em}
 
 /* Calculadora: entradas a la izquierda, resultado a la derecha (fijo al hacer scroll) */
-.calc{display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(16px,2vw,28px);align-items:start}
+:root{--split:minmax(0,1.2fr) minmax(0,.8fr);--split-gap:clamp(16px,2vw,28px)}
+.calc{display:grid;grid-template-columns:var(--split);gap:var(--split-gap);align-items:start}
 .calc-in{background:var(--white);border-radius:20px;padding:clamp(24px,3vw,44px);display:grid;gap:28px;color:var(--ink);
   box-shadow:0 1px 0 rgba(0,0,0,.03), 0 24px 48px -32px color-mix(in srgb, var(--c) 50%, transparent)}
 .block{border:0;margin:0;padding:24px 0 0;min-width:0;border-top:1px solid var(--line);display:grid;gap:18px}
@@ -253,7 +256,8 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .k-fin{background:#ffd9c7}
 
 /* Preguntas frecuentes + quién asesora */
-.plan-foot{margin-top:clamp(56px,6vw,88px);display:grid;grid-template-columns:minmax(0,1.2fr) minmax(0,.8fr);gap:clamp(32px,4vw,64px);align-items:start}
+.plan-foot{margin-top:clamp(56px,6vw,88px);display:grid;grid-template-columns:var(--split);gap:var(--split-gap);align-items:start}
+.faq{padding-right:clamp(0px,2vw,32px)}
 .plan-foot h3{font:600 clamp(26px,2.3vw,32px)/1.15 var(--serif);color:var(--c)}
 .faq details{border-top:1px solid color-mix(in srgb, var(--c) 25%, transparent)}
 .faq details:last-child{border-bottom:1px solid color-mix(in srgb, var(--c) 25%, transparent)}
@@ -303,8 +307,10 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 /* ---------- 7b. Solicitud de asesoría ----------
    Fondo claro de la tarjeta del hero, formulario blanco y botón en azul de marca. */
 .lead{background:var(--hero-bg);padding-block:var(--section)}
-.lead-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(36px,5vw,88px);align-items:start}
-.lead-copy h3{font:600 clamp(34px,3.8vw,54px)/1.08 var(--serif);letter-spacing:-.01em}
+.lead-grid{display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px);align-items:start}
+.lead-copy{padding-right:clamp(0px,2vw,28px)}
+.lead-form{grid-column:2 / -1}
+.lead-copy h3{font:600 clamp(28px,2.6vw,38px)/1.12 var(--serif);letter-spacing:-.01em}
 .lead-copy > p{margin-top:18px;font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:var(--body);max-width:30em}
 .lead-steps{margin-top:32px;counter-reset:l}
 .lead-steps li{counter-increment:l;position:relative;padding:16px 0 16px 44px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--body)}
@@ -353,7 +359,7 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .lf-status.ok{color:var(--ret-ink);font-weight:500}
 .lf-status.bad{color:#b3261e}
 
-@media (max-width:1000px){.lead-grid{grid-template-columns:1fr}}
+@media (max-width:1000px){.lead-grid{grid-template-columns:1fr;gap:32px}.lead-form{grid-column:auto}}
 @media (max-width:560px){
   .lf-grid{grid-template-columns:1fr}
   .tel{grid-template-columns:118px 1fr}
@@ -379,6 +385,9 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 
 /* ---------- 8. Método: tres jugadas ---------- */
 .method{padding-block:var(--section);background:var(--hero-bg)}
+.lead{padding-bottom:calc(var(--section) * .6)}
+.lead + .method{padding-top:0}
+.lead + .method > .wrap::before{content:"";display:block;height:1px;background:var(--line);margin-bottom:calc(var(--section) * .6)}
 .moves{display:grid;grid-template-columns:repeat(3,1fr);gap:0;counter-reset:m}
 .move{padding:0 clamp(20px,3vw,48px);border-left:1px solid var(--line)}
 .move:first-child{padding-left:0;border-left:0}
@@ -389,7 +398,8 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .board .sq-was{fill:color-mix(in srgb, var(--blue) 28%, #efe7e2)}
 .board .sq-on{fill:var(--blue)}
 .phase{color:var(--blue-deep)}
-.move h3{margin-top:24px;font:600 clamp(24px,2.1vw,30px)/1.2 var(--serif)}
+.move h3{margin-top:24px;font:600 clamp(24px,2.1vw,30px)/1.2 var(--serif);min-height:2.4em}
+@media (max-width:900px){.move h3{min-height:0}}
 .move p:not(.phase){margin-top:14px;font-size:15.5px;line-height:1.75;color:var(--body);max-width:30em}
 @media (max-width:900px){
   .moves{grid-template-columns:1fr;gap:40px}
@@ -403,14 +413,14 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .about-head p:not(.belief){margin-top:20px;font-size:16.5px;line-height:1.75;color:var(--body);max-width:32em}
 .about-head b{color:var(--head)}
 .tiles{display:grid;grid-template-columns:1fr 1fr;gap:16px}
-.tile{background:var(--fun-bg);color:var(--fun-ink);border-radius:12px;padding:26px 24px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-end;position:relative;overflow:hidden;transition:transform .35s var(--ease-out), box-shadow .35s var(--ease-out)}
+.tile{background:var(--fun-bg);color:var(--fun-ink);border-radius:12px;padding:96px 24px 26px;min-height:200px;display:flex;flex-direction:column;justify-content:flex-start;position:relative;overflow:hidden;transition:transform .35s var(--ease-out), box-shadow .35s var(--ease-out)}
 .tile h3{font:600 22px/1.2 var(--serif);color:inherit;position:relative}
 .tile p{margin-top:8px;font-size:14.5px;line-height:1.6;position:relative}
 
 .t-family::before{
   /* Tres arcos concéntricos: los tuyos, cubiertos */
-  content:"";position:absolute;right:-30px;top:-30px;width:150px;height:150px;border-radius:50%;
-  background:radial-gradient(circle,transparent 0 22px,var(--blue) 22px 30px,transparent 30px 44px,#7aa3ee 44px 52px,transparent 52px 66px,#b9cff7 66px 74px,transparent 74px);
+  content:"";position:absolute;right:-36px;top:-36px;width:120px;height:120px;border-radius:50%;
+  background:radial-gradient(circle,transparent 0 16px,var(--blue) 16px 22px,transparent 22px 34px,#7aa3ee 34px 40px,transparent 40px 52px,#b9cff7 52px 58px,transparent 58px);
 }
 .t-chess{}
 .t-chess::before{

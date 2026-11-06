@@ -1,15 +1,26 @@
 Archivos pendientes del cliente
 
-1. carlos-arzat.png
-   Foto de Carlos de la cintura hacia arriba, PNG con fondo transparente,
-   mínimo 1200 x 1500 px. Al colocarla aquí con este nombre, el hero la
-   muestra en lugar del espacio reservado (no hay que tocar el código).
+1. Video de presentación (quién soy, qué hago y cómo lo hago)
+   Reemplazar assets/video-carlos.mp4 con el video de Carlos (mismo nombre).
+   Recomendado: MP4 (H.264), vertical 4:5 o 9:16, menos de 20 MB.
+   Reemplazar también assets/video-carlos-poster.jpg con un cuadro del video
+   (es la imagen que se ve antes de darle play).
+   El video actual es solo de prueba (texto, sin audio).
 
-2. Logotipos de Allianz, AXA y Mapfre (SVG o PNG monocromo), con permiso
-   de uso de cada aseguradora. Hoy aparecen como texto en "Trabajo con".
+2. Liga de agenda (Calendly, Google Calendar, etc.)
+   Ponerla en main.js, variable AGENDA_URL. Mientras esté vacía,
+   "Agenda cita" abre WhatsApp con un mensaje para agendar.
 
-3. URLs de Facebook e Instagram: reemplazar los href="#" en index.html
-   (sección footer, lista .f-social).
+3. Correo que recibe las solicitudes del formulario
+   main.js, variable LEAD_EMAIL (hoy: erickarzat11@gmail.com, de prueba).
+   Al cambiarlo, el primer envío pide activar el formulario desde ese correo.
 
-4. Confirmar con Carlos el texto de su filosofía: "Creo firmemente que la vida es solo una..."
-   (el original decía "que vida solo una"; la página usa la corrección propuesta).
+4. Aviso de privacidad (obligatorio por la LFPDPPP antes de recibir datos reales).
+
+5. Logotipos de Allianz, AXA y Mapfre con permiso de uso.
+
+6. URLs de Facebook e Instagram (footer, .f-social).
+
+7. Confirmar con Carlos:
+   - El texto de su filosofía: "Creo firmemente que la vida es solo una...".
+   - Los textos de la sección "Análisis de negocio" (redactados como propuesta).

@@ -25,8 +25,9 @@
     <ul>
       <li><a href="#retiro">Retiro</a></li>
       <li><a href="#proteccion">Protección</a></li>
+      <li><a href="#negocio">Negocio</a></li>
       <li><a href="#metodo">Método</a></li>
-      <li><a href="#contacto">Contacto</a></li>
+      <li><a href="#contacto-opciones">Contacto</a></li>
     </ul>
   </nav>
 </header>
@@ -60,18 +61,21 @@
             Escríbeme por WhatsApp
           </button>
           <p class="pick-note" id="pick-note" aria-live="polite">Se abrirá WhatsApp con tu tema: <b>ordenar mis finanzas</b>.</p>
+          <p class="alt-actions">O si prefieres: <a href="#" data-agenda>Agenda una cita</a><span aria-hidden="true">·</span><a href="#solicitud">Solicita tu proyección</a></p>
         </form>
       </div>
 
-      <!-- Retrato: PNG de Carlos con fondo transparente en assets/carlos-arzat.png.
-           Mientras no exista, main.js muestra el espacio reservado. -->
-      <figure class="portrait">
-        <img src="assets/carlos-arzat.png" alt="Carlos Arzat" width="900" height="1125" fetchpriority="high">
-        <figcaption class="portrait-missing">
-          <svg aria-hidden="true" viewBox="0 0 64 64" width="56" height="56"><path d="M22 54h24M24 48h20l2 6H22zM26 48c0-8 2-12 6-16-5 0-9-2-10-6 3-9 10-14 18-14l2-4 3 6c4 4 5 10 4 16-1 6-3 11-3 18" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linejoin="round" stroke-linecap="round"/><circle cx="36" cy="20" r="1.6" fill="currentColor"/></svg>
-          <span>Espacio para la foto de Carlos</span>
-          <small>PNG sin fondo · 1200 × 1500 px</small>
-        </figcaption>
+      <!-- Quién soy: video de presentación en lugar de fotografía.
+           Para cambiarlo, reemplazar assets/video-carlos.mp4 (y su póster .jpg) con el video de Carlos. -->
+      <figure class="intro-video">
+        <div class="iv-frame">
+          <video id="hero-video" src="assets/video-carlos.mp4" poster="assets/video-carlos-poster.jpg" playsinline preload="metadata" aria-label="Video: quién es Carlos Arzat, qué hace y cómo lo hace"></video>
+          <button class="iv-play" id="iv-play" type="button" aria-label="Reproducir video de presentación">
+            <span class="iv-dot" aria-hidden="true"><svg viewBox="0 0 24 24" width="22" height="22"><path d="M8 5.5v13l10.5-6.5z" fill="currentColor"/></svg></span>
+            <span class="iv-label">Ver video</span>
+          </button>
+        </div>
+        <figcaption>Quién soy, qué hago y cómo lo hago <span id="iv-dur"></span></figcaption>
       </figure>
 
       <!-- Credenciales verificables: la prueba va pegada a la presentación -->
@@ -326,13 +330,104 @@
     </div>
   </section>
 
+  <!-- ============ ANÁLISIS DE NEGOCIO ============
+       Banda azul (pareja pastel de la referencia). Qué se analiza, preguntas frecuentes y quién asesora.
+       Textos por validar con Carlos. -->
+  <section class="plan plan-biz" id="negocio" aria-labelledby="t-negocio">
+    <div class="wrap">
+      <header class="plan-head seq">
+        <h2 id="t-negocio">Análisis de negocio</h2>
+        <p>Si tienes un negocio, tus ingresos suben y bajan y tu patrimonio está más expuesto. Revisamos cómo protegerlo y cómo separar lo que es del negocio de lo que es de tu familia.</p>
+      </header>
+
+      <ol class="biz-list seq">
+        <li>
+          <h3>Finanzas del negocio y personales</h3>
+          <p>Ordenamos el flujo para que el gasto de tu casa no dependa de los altibajos del negocio, y definimos cuánto puedes retirar cada mes.</p>
+        </li>
+        <li>
+          <h3>Persona clave</h3>
+          <p>Si la operación depende de ti o de alguien de tu equipo, estimamos cuánto costaría su ausencia y cómo cubrirla con un seguro.</p>
+        </li>
+        <li>
+          <h3>Acuerdo entre socios</h3>
+          <p>Un acuerdo respaldado con seguro de vida para que, si falta un socio, los demás puedan comprar su parte y su familia reciba su valor.</p>
+        </li>
+        <li>
+          <h3>Retiro del dueño</h3>
+          <p>Un plan para que tu retiro no dependa de vender el negocio ni de que siga funcionando sin ti.</p>
+        </li>
+      </ol>
+
+      <div class="plan-foot">
+        <div class="faq seq">
+          <h3>Preguntas frecuentes</h3>
+          <details>
+            <summary>¿Para qué tipo de negocio es?</summary>
+            <p>Para personas con actividad empresarial y pequeñas y medianas empresas: negocios con ingresos variables, socios o patrimonio que proteger.</p>
+          </details>
+          <details>
+            <summary>¿Qué información necesito para empezar?</summary>
+            <p>Un panorama de los ingresos y gastos del negocio, sus deudas, quiénes son los socios y quién sostiene la operación. No necesitas estados financieros auditados para la primera conversación.</p>
+          </details>
+          <details>
+            <summary>¿Mi información está segura?</summary>
+            <p>Sí. Manejo tu información de forma estricta y confidencial, y solo la uso para preparar tu diagnóstico.</p>
+          </details>
+        </div>
+
+        <aside class="advisor seq" aria-labelledby="t-asesor-biz">
+          <h3 id="t-asesor-biz">Quién te asesora y cómo lo hace</h3>
+          <div class="who">
+            <span class="who-mono" aria-hidden="true">CA</span>
+            <p><b>Carlos Arzat</b><br>Lic. en Actuaría, cédula 12355703 · Agente certificado CNSF C371460</p>
+          </div>
+          <ol class="how">
+            <li><b>Diagnóstico del negocio.</b> Entendemos cómo entra y sale el dinero, y de quién depende.</li>
+            <li><b>Riesgos y prioridades.</b> Identificamos qué pasaría si falta una persona clave o un socio.</li>
+            <li><b>Plan y seguimiento.</b> Proponemos la protección y el orden financiero, y lo revisamos contigo cada año.</li>
+          </ol>
+        </aside>
+      </div>
+    </div>
+  </section>
+
   <!-- ============ SOLICITUD DE ASESORÍA ============
        Formulario que llega por correo al asesor (FormSubmit, sin servidor propio).
        Correo de prueba: erickarzat11@gmail.com. Para cambiarlo, editar LEAD_EMAIL en main.js. -->
-  <section class="lead" id="solicitud" aria-labelledby="t-solicitud">
-    <div class="wrap lead-grid">
+  <section class="lead" id="contacto-opciones" aria-labelledby="t-hablemos">
+    <div class="wrap">
+      <header class="lead-head seq">
+        <h2 id="t-hablemos">Hablemos de tu plan</h2>
+        <p>Elige la forma que te quede más cómoda. En las tres hablas directamente conmigo.</p>
+      </header>
+      <ul class="ways seq">
+        <li>
+          <a class="way" href="#" data-agenda target="_blank" rel="noopener">
+            <span class="way-k">Agenda una cita</span>
+            <span class="way-d">Elige el día y la hora en mi agenda.</span>
+            <span class="way-go" aria-hidden="true"><svg viewBox="0 0 20 12" width="20" height="12"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="way" href="https://wa.me/529991392123?text=Hola%20Carlos%2C%20quiero%20informaci%C3%B3n%20sobre%20tu%20asesor%C3%ADa." target="_blank" rel="noopener">
+            <span class="way-k">Chatea por WhatsApp</span>
+            <span class="way-d">Escríbeme y te respondo personalmente.</span>
+            <span class="way-go" aria-hidden="true"><svg viewBox="0 0 20 12" width="20" height="12"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          </a>
+        </li>
+        <li>
+          <a class="way" href="#solicitud">
+            <span class="way-k">Solicita tu proyección</span>
+            <span class="way-d">Déjame tus datos y yo te contacto.</span>
+            <span class="way-go" aria-hidden="true"><svg viewBox="0 0 20 12" width="20" height="12"><path d="M0 6h18M13 1l5 5-5 5" fill="none" stroke="currentColor" stroke-width="1.8"/></svg></span>
+          </a>
+        </li>
+      </ul>
+    </div>
+    <div class="wrap lead-grid" id="solicitud">
       <div class="lead-copy seq">
-        <h2 id="t-solicitud">Recibe tu proyección personalizada</h2>
+        <h3 id="t-solicitud">Recibe tu proyección personalizada</h3>
         <p>Déjame tus datos y te contacto para revisar tu retiro con tus números reales: tu Afore, tu capacidad de ahorro y el plan que mejor te acomode.</p>
         <ol class="lead-steps">
           <li><b>Me llega tu solicitud.</b> Solo yo la recibo y la trato de forma confidencial.</li>
@@ -515,11 +610,22 @@
   </div>
 </footer>
 
-<!-- Botón flotante de WhatsApp: se oculta cuando el hero o el footer ya muestran la acción -->
-<a class="float-wa" id="float-wa" href="https://wa.me/529991392123?text=Hola%20Carlos%2C%20quiero%20agendar%20un%20diagn%C3%B3stico." target="_blank" rel="noopener" aria-label="Escribir a Carlos por WhatsApp">
-  <svg aria-hidden="true" viewBox="0 0 24 24" width="22" height="22"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.4-.2Z"/></svg>
-  <span>WhatsApp</span>
-</a>
+<!-- Botones de acción fijos: Agenda cita, WhatsApp y Solicita tu proyección.
+     Se ocultan mientras el hero o la sección de contacto están en pantalla. -->
+<nav class="actions" id="actions" aria-label="Acciones rápidas">
+  <a class="act act-agenda" href="#" data-agenda target="_blank" rel="noopener">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><rect x="3.5" y="5" width="17" height="15" rx="2.5" fill="none" stroke="currentColor" stroke-width="1.8"/><path d="M3.5 10h17M8 3v4M16 3v4" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span>Agenda cita</span>
+  </a>
+  <a class="act act-wa" id="float-wa" href="https://wa.me/529991392123?text=Hola%20Carlos%2C%20quiero%20agendar%20un%20diagn%C3%B3stico." target="_blank" rel="noopener">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path fill="currentColor" d="M12 2a10 10 0 0 0-8.6 15.1L2 22l5-1.3A10 10 0 1 0 12 2Zm0 18.2a8.2 8.2 0 0 1-4.2-1.2l-.3-.2-3 .8.8-2.9-.2-.3A8.2 8.2 0 1 1 12 20.2Zm4.5-6.1c-.2-.1-1.5-.7-1.7-.8-.2-.1-.4-.1-.6.1l-.8 1c-.1.2-.3.2-.5.1a6.7 6.7 0 0 1-3.3-2.9c-.2-.4.2-.4.7-1.3.1-.1 0-.3 0-.4l-.8-1.8c-.2-.5-.4-.4-.6-.4h-.5a1 1 0 0 0-.7.3 3 3 0 0 0-.9 2.2 5.2 5.2 0 0 0 1.1 2.8 11.9 11.9 0 0 0 4.6 4c1.7.7 2.4.8 3.2.7.5-.1 1.5-.6 1.7-1.2.2-.6.2-1.1.2-1.2l-.4-.2Z"/></svg>
+    <span>WhatsApp</span>
+  </a>
+  <a class="act act-lead" href="#solicitud">
+    <svg aria-hidden="true" viewBox="0 0 24 24" width="18" height="18"><path d="M6 3.5h8.5L19 8v12.5H6z" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linejoin="round"/><path d="M9 12h7M9 16h5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>
+    <span>Solicita tu proyección</span>
+  </a>
+</nav>
 
 <script src="main.js" defer></script>
 </body>

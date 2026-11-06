@@ -25,14 +25,20 @@
     input.value = n ? fmt.format(n) : '';
   }
 
-  /* ---------- 1. Retrato: si falta el PNG, se muestra el espacio reservado ---------- */
-  var hero = document.querySelector('.hero-card');
-  var photo = document.querySelector('.portrait img');
-  if (photo) {
-    var missing = function () { hero.classList.add('no-photo'); };
-    if (photo.complete && photo.naturalWidth === 0) missing();
-    photo.addEventListener('error', missing);
-  }
+  /* ---------- 1. Video de presentación ----------
+     Botón propio para reproducir; al empezar aparecen los controles nativos. */
+  var video = document.getElementById('hero-video');
+  var frame = video.parentNode;
+  document.getElementById('iv-play').addEventListener('click', function () {
+    video.controls = true;
+    video.play();
+  });
+  video.addEventListener('play', function () { frame.classList.add('playing'); });
+  video.addEventListener('ended', function () { frame.classList.remove('playing'); video.controls = false; });
+  video.addEventListener('loadedmetadata', function () {
+    var t = Math.round(video.duration);
+    if (t) document.getElementById('iv-dur').textContent = '· ' + Math.floor(t / 60) + ':' + ('0' + t % 60).slice(-2);
+  });
 
   /* ---------- 2. Selector de tema → mensaje de WhatsApp ---------- */
   var pick = document.getElementById('pick');
@@ -273,8 +279,20 @@
         status.className = 'lf-status ok';
         status.textContent = 'Listo, ' + data['Nombre completo'].split(' ')[0] + '. Recibí tu solicitud y te escribo por WhatsApp para agendar.';
       })
-      .catch(function () {
+      .catch(function (err) {
+        // FormSubmit responde success:false con un mensaje; lo dejamos en la consola para diagnosticar
+        var msg = (err && err.message) ? String(err.message) : String(err || '');
+        if (window.console) console.warn('FormSubmit:', err);
         status.className = 'lf-status bad';
+        if (/activat/i.test(msg)) {
+          // Primer envío: FormSubmit mandó el correo de activación a LEAD_EMAIL
+          status.textContent = 'Formulario pendiente de activación: revisa la bandeja de ' + LEAD_EMAIL + ' (y spam), confirma el correo de FormSubmit y vuelve a enviar.';
+          return;
+        }
+        if (location.protocol === 'file:' || /web server/i.test(msg)) {
+          status.textContent = 'El formulario solo funciona con la página publicada o servida desde un servidor web, no abriendo el archivo directamente.';
+          return;
+        }
         status.innerHTML = 'No pudimos enviar tu solicitud. Inténtalo de nuevo o escríbeme directo por <a href="https://wa.me/529991392123" target="_blank" rel="noopener">WhatsApp</a>.';
       })
       .then(function () {
@@ -308,15 +326,31 @@
     items.forEach(function (el) { if (el.classList.contains('wait')) io.observe(el); });
   }
 
-  /* ---------- 6. Botón flotante ----------
-     Aparece cuando el botón del hero sale de pantalla y se oculta en el footer. */
+  /* ---------- 6. Agenda y botones de acción ----------
+     AGENDA_URL: liga de la agenda de Carlos (Calendly, Google Calendar, etc.).
+     Mientras esté vacía, "Agenda cita" abre WhatsApp con un mensaje para agendar. */
+  var AGENDA_URL = '';
+  var agendaHref = AGENDA_URL || WA + encodeURIComponent('Hola Carlos, quiero agendar una cita para mi asesoría.');
+  document.querySelectorAll('[data-agenda]').forEach(function (a) {
+    a.href = agendaHref;
+    a.target = '_blank';
+    a.rel = 'noopener';
+  });
+
+  // La barra aparece cuando el botón del hero sale de pantalla y se oculta en la sección de contacto y el footer
   if ('IntersectionObserver' in window) {
+    var bar = document.getElementById('actions');
     var heroBtn = document.querySelector('.btn-wa');
-    var footer = document.getElementById('contacto');
-    var heroVisible = true, footVisible = false;
-    var update = function () { floatWa.classList.toggle('off', heroVisible || footVisible); };
+    var zones = [document.getElementById('contacto-opciones'), document.getElementById('contacto')];
+    var heroVisible = true, zoneVisible = {};
+    var update = function () {
+      var inZone = Object.keys(zoneVisible).some(function (k) { return zoneVisible[k]; });
+      bar.classList.toggle('off', heroVisible || inZone);
+    };
     new IntersectionObserver(function (e) { heroVisible = e[0].isIntersecting; update(); }).observe(heroBtn);
-    new IntersectionObserver(function (e) { footVisible = e[0].isIntersecting; update(); }, { threshold: 0.1 }).observe(footer);
+    zones.forEach(function (z) {
+      new IntersectionObserver(function (e) { zoneVisible[z.id] = e[0].isIntersecting; update(); }, { threshold: 0.05 }).observe(z);
+    });
     update();
   }
 })();

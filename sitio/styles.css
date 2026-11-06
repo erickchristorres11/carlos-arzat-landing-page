@@ -119,18 +119,23 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .pick-note{margin-top:12px;font-size:13.5px;color:var(--mute)}
 .pick-note b{color:var(--head);font-weight:500}
 
-/* Retrato que sobresale de la tarjeta por arriba */
-.portrait{grid-area:photo;position:relative;align-self:end;justify-self:center;width:min(100%,420px);height:calc(100% + 44px);margin-top:-44px;min-height:500px}
-.portrait img{position:absolute;inset:0;width:100%;height:100%;object-fit:contain;object-position:bottom center}
-.portrait-missing{display:none}
-.no-photo .portrait img{display:none}
-.no-photo .portrait-missing{
-  position:absolute;inset:0 18px 0;display:flex;flex-direction:column;align-items:center;justify-content:center;gap:10px;
-  border-radius:200px 200px 0 0;background:linear-gradient(#e0eefd,#eef4fd);color:#405a7c;text-align:center;padding:24px;
-  border:1.5px dashed #a9bfdc;border-bottom:0;
-}
-.portrait-missing span{font-weight:500;font-size:15px;color:#2b4466}
-.portrait-missing small{font-size:12.5px}
+/* Video de presentación: sobresale de la tarjeta por arriba, como el retrato de la referencia */
+.intro-video{grid-area:photo;position:relative;z-index:2;align-self:start;justify-self:center;width:min(100%,400px);margin:-44px clamp(20px,3vw,48px) 32px 0}
+.iv-frame{position:relative;aspect-ratio:4 / 5;border-radius:20px;overflow:hidden;background:var(--fun-bg);
+  box-shadow:0 2px 0 rgba(0,0,0,.03), 0 30px 60px -34px rgba(31,88,199,.55)}
+.iv-frame video{display:block;width:100%;height:100%;object-fit:cover;background:var(--fun-bg)}
+.iv-play{position:absolute;left:50%;bottom:22px;transform:translateX(-50%);display:inline-flex;align-items:center;gap:10px;
+  padding:8px 18px 8px 8px;border:0;border-radius:999px;cursor:pointer;background:var(--white);color:var(--head);
+  font:600 15px/1 var(--sans);white-space:nowrap;box-shadow:0 12px 28px -12px rgba(16,16,16,.45);transition:transform .4s var(--ease-out), box-shadow .4s var(--ease-out)}
+.iv-play:hover{transform:translateX(-50%) translateY(-2px);box-shadow:0 18px 34px -14px rgba(16,16,16,.5)}
+.iv-dot{width:42px;height:42px;border-radius:50%;display:grid;place-items:center;background:var(--blue-deep);color:#fff}
+.iv-dot svg{margin-left:2px}
+.playing .iv-play{opacity:0;pointer-events:none;transform:translateX(-50%) translateY(8px)}
+.intro-video figcaption{margin-top:14px;font-size:14px;color:var(--mute);text-align:center}
+.intro-video figcaption span{font-variant-numeric:tabular-nums}
+
+.alt-actions{margin-top:8px;display:flex;flex-wrap:wrap;gap:6px 10px;font-size:14.5px;color:var(--body)}
+.alt-actions a{color:var(--blue-deep);font-weight:500}
 
 /* Credenciales al pie de la tarjeta */
 .creds{grid-area:creds;display:grid;grid-template-columns:repeat(4,1fr);border-top:1px solid var(--line);position:relative;z-index:2;background:var(--hero-bg);border-radius:0 0 24px 24px}
@@ -142,7 +147,7 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 
 @media (max-width:1000px){
   .hero-card{grid-template-columns:1fr;grid-template-areas:"photo" "copy" "creds"}
-  .portrait{width:min(78%,340px);height:400px;min-height:0;margin-top:-48px}
+  .intro-video{width:min(84%,360px);margin:-48px auto 0}
   .hero-copy{padding:36px 28px 40px;max-width:none}
   .creds{grid-template-columns:1fr 1fr}
   .creds div:first-child{padding-left:28px}
@@ -152,7 +157,6 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 @media (max-width:520px){
   .hero{padding-top:64px}
   .hero-copy{padding:28px 22px 34px}
-  .portrait{height:290px}
   .creds div{padding:18px 16px 20px}
   .creds div:first-child,.creds div:nth-child(3){padding-left:22px}
   .btn-wa{width:100%;justify-content:center}
@@ -280,11 +284,27 @@ html{scrollbar-color:#cfc6c2 var(--white)}
   .calc-in{gap:24px}
 }
 
+/* Análisis de negocio: pareja azul de la referencia */
+.plan-biz{--bg:#e8edfd;--c:#2a34c6;--c-deep:#1d2590;background:var(--bg)}
+.biz-list{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));background:var(--white);border-radius:20px;overflow:hidden;counter-reset:bz;
+  box-shadow:0 1px 0 rgba(0,0,0,.03), 0 24px 48px -32px color-mix(in srgb, var(--c) 50%, transparent)}
+.biz-list li{counter-increment:bz;position:relative;padding:clamp(26px,3vw,40px) clamp(24px,3vw,44px) clamp(26px,3vw,40px) clamp(64px,6vw,92px);border-top:1px solid var(--line)}
+.biz-list li:nth-child(-n+2){border-top:0}
+.biz-list li:nth-child(even){border-left:1px solid var(--line)}
+.biz-list li::before{content:counter(bz);position:absolute;left:clamp(24px,3vw,44px);top:clamp(24px,2.9vw,38px);font:600 28px/1 var(--serif);color:var(--c)}
+.biz-list h3{font:600 clamp(22px,1.8vw,26px)/1.2 var(--serif);color:var(--head)}
+.biz-list p{margin-top:10px;font-size:15.5px;line-height:1.7;color:var(--body);max-width:32em}
+@media (max-width:760px){
+  .biz-list{grid-template-columns:1fr}
+  .biz-list li:nth-child(2){border-top:1px solid var(--line)}
+  .biz-list li:nth-child(even){border-left:0}
+}
+
 /* ---------- 7b. Solicitud de asesoría ----------
    Fondo claro de la tarjeta del hero, formulario blanco y botón en azul de marca. */
 .lead{background:var(--hero-bg);padding-block:var(--section)}
 .lead-grid{display:grid;grid-template-columns:minmax(0,.85fr) minmax(0,1.15fr);gap:clamp(36px,5vw,88px);align-items:start}
-.lead-copy h2{font:600 clamp(34px,3.8vw,54px)/1.08 var(--serif);letter-spacing:-.01em}
+.lead-copy h3{font:600 clamp(34px,3.8vw,54px)/1.08 var(--serif);letter-spacing:-.01em}
 .lead-copy > p{margin-top:18px;font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:var(--body);max-width:30em}
 .lead-steps{margin-top:32px;counter-reset:l}
 .lead-steps li{counter-increment:l;position:relative;padding:16px 0 16px 44px;border-top:1px solid var(--line);font-size:15.5px;line-height:1.6;color:var(--body)}
@@ -338,6 +358,24 @@ html{scrollbar-color:#cfc6c2 var(--white)}
   .lf-grid{grid-template-columns:1fr}
   .tel{grid-template-columns:118px 1fr}
 }
+
+/* Tres formas de contacto */
+.lead-head{max-width:760px}
+.lead-head h2{font:600 clamp(34px,3.8vw,54px)/1.08 var(--serif);letter-spacing:-.01em}
+.lead-head p{margin-top:16px;font-size:clamp(16px,1.25vw,19px);line-height:1.7;color:var(--body)}
+.ways{margin-top:clamp(32px,4vw,48px);display:grid;grid-template-columns:repeat(3,minmax(0,1fr));gap:clamp(12px,1.6vw,20px)}
+.way{position:relative;display:flex;flex-direction:column;gap:6px;height:100%;padding:24px 64px 26px 26px;border-radius:16px;text-decoration:none;
+  background:var(--white);border:1.5px solid var(--line);transition:border-color .25s, transform .4s var(--ease-out), box-shadow .4s var(--ease-out)}
+.way:hover{border-color:var(--blue-deep);transform:translateY(-2px);box-shadow:0 18px 36px -24px rgba(31,88,199,.55)}
+.way-k{font:600 clamp(21px,1.7vw,24px)/1.2 var(--serif);color:var(--head)}
+.way-d{font-size:14.5px;line-height:1.5;color:var(--body)}
+.way-go{position:absolute;right:22px;top:50%;transform:translateY(-50%);width:34px;height:34px;border-radius:50%;display:grid;place-items:center;background:var(--hero-bg);color:var(--blue-deep);transition:background .25s, color .25s}
+.way:hover .way-go{background:var(--blue-deep);color:#fff}
+.ways li:nth-child(2) .way-go{color:var(--wa)}
+.ways li:nth-child(2) .way:hover{border-color:var(--wa);box-shadow:0 18px 36px -24px rgba(24,122,65,.55)}
+.ways li:nth-child(2) .way:hover .way-go{background:var(--wa);color:#fff}
+.lead-grid{margin-top:clamp(56px,6vw,88px);scroll-margin-top:24px}
+@media (max-width:860px){.ways{grid-template-columns:1fr}}
 
 /* ---------- 8. Método: tres jugadas ---------- */
 .method{padding-block:var(--section);background:var(--hero-bg)}
@@ -426,14 +464,22 @@ html{scrollbar-color:#cfc6c2 var(--white)}
 .f-base{display:flex;justify-content:space-between;flex-wrap:wrap;gap:8px 24px;padding-block:22px 28px;border-top:1px solid rgba(255,255,255,.22);font-size:13px;color:#fff}
 @media (max-width:900px){.f-grid{grid-template-columns:1fr;gap:40px}}
 
-/* ---------- 11. Botón flotante ---------- */
-.float-wa{
-  position:fixed;right:20px;bottom:20px;z-index:40;display:inline-flex;align-items:center;gap:8px;
-  background:var(--wa);color:#fff;text-decoration:none;font-weight:600;font-size:15px;
-  padding:14px 20px 14px 16px;border-radius:999px;box-shadow:0 14px 30px -12px rgba(0,0,0,.35);
-  transition:opacity .35s var(--ease-out), transform .45s var(--ease-out);
+/* ---------- 11. Botones de acción fijos ----------
+   Escritorio: píldora en la esquina. Móvil: barra inferior de tres botones. */
+.actions{position:fixed;right:20px;bottom:20px;z-index:40;display:flex;gap:6px;padding:6px;border-radius:999px;background:var(--white);
+  box-shadow:0 1px 0 rgba(0,0,0,.04), 0 18px 40px -16px rgba(16,16,16,.35);transition:opacity .35s var(--ease-out), transform .45s var(--ease-out)}
+.actions.off{opacity:0;transform:translateY(16px) scale(.97);pointer-events:none}
+.act{display:inline-flex;align-items:center;gap:8px;padding:12px 16px;border-radius:999px;text-decoration:none;font-weight:600;font-size:14.5px;color:var(--head);transition:background .2s, color .2s}
+.act:hover{background:var(--hero-bg)}
+.act-wa{background:var(--wa);color:#fff}
+.act-wa:hover{background:#136836}
+.act-lead{background:var(--blue-deep);color:#fff}
+.act-lead:hover{background:#1a4aa8}
+@media (max-width:720px){
+  .actions{left:0;right:0;bottom:0;border-radius:16px 16px 0 0;padding:8px 8px calc(8px + env(safe-area-inset-bottom));display:grid;grid-template-columns:1fr 1fr 1.25fr}
+  .act{flex-direction:column;justify-content:center;gap:4px;padding:9px 6px;border-radius:12px;font-size:12.5px;text-align:center;line-height:1.2}
+  body{padding-bottom:76px}
 }
-.float-wa.off{opacity:0;transform:translateY(16px) scale(.96);pointer-events:none}
 
 /* ---------- 12. Entrada escalonada (.seq de la referencia) ----------
    Solo se oculta lo que está fuera de pantalla y solo con JS activo:
@@ -443,7 +489,7 @@ html{scrollbar-color:#cfc6c2 var(--white)}
   .js .seq{transition:opacity 1s var(--ease-out), transform 1s var(--ease-out), filter 1s var(--ease-out);transition-delay:var(--sd,0ms)}
   .js .card.seq{transition:opacity 1s var(--ease-out), transform 1s var(--ease-out), filter 1s var(--ease-out)}
   .js .hero-copy > *{animation:rise 1s var(--ease-out) both;animation-delay:var(--sd,0ms)}
-  .js .portrait{animation:lift 1.2s var(--ease-out) .15s both}
+  .js .intro-video{animation:lift 1.2s var(--ease-out) .15s both}
 }
 @keyframes rise{from{opacity:0;transform:translateY(24px)}}
 @keyframes lift{from{opacity:0;transform:translateY(40px)}}
